@@ -81,6 +81,11 @@ export default {
           busy: "rgb(239 68 68)",
           offline: "rgb(156 163 175)",
         },
+        ark: {
+          orange: "#FF5501",
+          magenta: "#9F0159",
+          cream: "#FFFAF9",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
