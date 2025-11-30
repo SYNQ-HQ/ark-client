@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
 import { Wallet, Heart, TrendingUp } from "lucide-react";
+import { easing } from "@/lib/motion";
 
 const steps = [
   {
@@ -23,52 +26,130 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const ref = useRef(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (!isInView || !lineRef.current) return;
+    
+    const tween = gsap.fromTo(
+      lineRef.current,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: 1.2,
+        delay: 0.6,
+        ease: "power2.out",
+      }
+    );
+
+    return () => {
+      tween.kill();
+    };
+  }, [isInView]);
+
   return (
-    <section className="py-20 md:py-28 bg-ark-cream" data-testid="how-it-works-section">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section 
+      ref={ref}
+      className="py-24 md:py-32 bg-gradient-to-b from-ark-cream to-white relative overflow-hidden" 
+      data-testid="how-it-works-section"
+    >
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-ark-orange/5 to-transparent blur-[100px]" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.8, ease: easing.cinematic }}
+          className="text-center max-w-3xl mx-auto mb-20"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            How It Works
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: easing.overshoot }}
+            className="inline-block px-4 py-1.5 rounded-full bg-ark-magenta/10 text-ark-magenta text-sm font-medium mb-6"
+          >
+            Simple Process
+          </motion.span>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-[-0.02em]">
+            <motion.span
+              className="block overflow-hidden"
+            >
+              <motion.span
+                className="block"
+                initial={{ y: "100%" }}
+                animate={isInView ? { y: "0%" } : { y: "100%" }}
+                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+              >
+                How It Works
+              </motion.span>
+            </motion.span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3, ease: easing.smooth }}
+            className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+          >
             Three simple steps to join the kindness economy and start making a difference.
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-          {steps.map((step, index) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="relative"
-            >
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-ark-orange/30 to-transparent -translate-x-1/2" />
-              )}
-              
-              <div className="text-center" data-testid={`step-${step.number}`}>
-                <div className="relative inline-block mb-6">
-                  <div className="w-24 h-24 rounded-2xl bg-white shadow-lg flex items-center justify-center">
-                    <step.icon className="w-10 h-10 text-ark-orange" />
-                  </div>
-                  <span className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center text-white font-bold text-sm">
-                    {step.number}
-                  </span>
+        <div className="relative">
+          <div 
+            ref={lineRef}
+            className="hidden lg:block absolute top-[60px] left-[16.67%] right-[16.67%] h-[2px] bg-gradient-to-r from-ark-orange via-ark-magenta to-ark-orange origin-left"
+            style={{ transform: "scaleX(0)" }}
+          />
+
+          <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
+                animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: 0.4 + index * 0.15,
+                  ease: easing.cinematic 
+                }}
+                className="relative"
+              >
+                <div className="text-center" data-testid={`step-${step.number}`}>
+                  <motion.div 
+                    className="relative inline-block mb-8"
+                    whileHover={{ y: -5 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className="w-28 h-28 rounded-3xl bg-white shadow-premium-lg flex items-center justify-center relative z-10">
+                      <step.icon className="w-12 h-12 text-ark-orange" />
+                    </div>
+                    <motion.span 
+                      className="absolute -top-4 -right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center text-white font-bold text-lg shadow-lg z-20"
+                      initial={{ scale: 0, rotate: -20 }}
+                      animate={isInView ? { scale: 1, rotate: 0 } : {}}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: 0.7 + index * 0.15,
+                        ease: easing.overshoot 
+                      }}
+                    >
+                      {step.number}
+                    </motion.span>
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-ark-orange/20 to-ark-magenta/20 blur-2xl scale-150 opacity-50" />
+                  </motion.div>
+                  
+                  <h3 className="text-2xl font-bold text-foreground mb-4">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Copy, ExternalLink, Check } from "lucide-react";
+import { Copy, ExternalLink, Check, ArrowRight } from "lucide-react";
+import MagneticButton from "./MagneticButton";
+import { easing } from "@/lib/motion";
 
-// todo: remove mock functionality
 const tokenData = {
   contractAddress: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
   totalSupply: "1,000,000,000",
@@ -22,7 +22,33 @@ const stats = [
   { label: "Reflections", value: tokenData.reflections, suffix: " per tx" },
 ];
 
+function AnimatedProgress({ percent, color, delay }: { percent: number; color: string; delay: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => setWidth(percent * 5), delay * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, percent, delay]);
+
+  return (
+    <div ref={ref} className="h-2 bg-gray-100 rounded-full overflow-hidden">
+      <motion.div
+        className={`h-full ${color} rounded-full`}
+        initial={{ width: 0 }}
+        animate={{ width: `${width}%` }}
+        transition={{ duration: 1, ease: easing.cinematic }}
+      />
+    </div>
+  );
+}
+
 export default function TokenStats() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [copied, setCopied] = useState(false);
 
   const copyAddress = () => {
@@ -32,127 +58,172 @@ export default function TokenStats() {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-white" data-testid="token-stats-section">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section 
+      ref={ref}
+      className="py-24 md:py-32 bg-white relative overflow-hidden" 
+      data-testid="token-stats-section"
+    >
+      <div className="absolute inset-0">
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-ark-magenta/5 to-transparent blur-[100px]" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.8, ease: easing.cinematic }}
+          className="text-center max-w-3xl mx-auto mb-20"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Token Utility & Stats
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: easing.overshoot }}
+            className="inline-block px-4 py-1.5 rounded-full bg-ark-orange/10 text-ark-orange text-sm font-medium mb-6"
+          >
+            Tokenomics
+          </motion.span>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-[-0.02em]">
+            <motion.span className="block overflow-hidden">
+              <motion.span
+                className="block"
+                initial={{ y: "100%" }}
+                animate={isInView ? { y: "0%" } : { y: "100%" }}
+                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+              >
+                Token Utility & Stats
+              </motion.span>
+            </motion.span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3, ease: easing.smooth }}
+            className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+          >
             $ACT is the heart of the ARK ecosystem. Hold, trade, and earn while making a difference.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8, delay: 0.3, ease: easing.cinematic }}
           >
-            <Card className="p-6 md:p-8 h-full" data-testid="card-contract">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Contract Address (BSC)</h3>
-              <div className="flex items-center gap-2 p-4 bg-ark-cream rounded-lg mb-6">
+            <Card className="p-8 md:p-10 h-full bg-white shadow-premium-lg border-0" data-testid="card-contract">
+              <h3 className="text-xl font-bold text-foreground mb-6">Contract Address (BSC)</h3>
+              <div className="flex items-center gap-3 p-5 bg-ark-cream/80 rounded-xl mb-8 group">
                 <code className="flex-1 font-mono text-sm text-foreground break-all">
                   {tokenData.contractAddress}
                 </code>
-                <Button
-                  variant="ghost"
-                  size="icon"
+                <motion.button
                   onClick={copyAddress}
-                  className="flex-shrink-0"
+                  className="flex-shrink-0 p-2.5 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   data-testid="button-copy-address"
                 >
                   {copied ? (
                     <Check className="w-4 h-4 text-green-500" />
                   ) : (
-                    <Copy className="w-4 h-4" />
+                    <Copy className="w-4 h-4 text-muted-foreground" />
                   )}
-                </Button>
+                </motion.button>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="p-4 bg-ark-cream/50 rounded-lg" data-testid={`stat-${stat.label.toLowerCase()}`}>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {stats.map((stat, index) => (
+                  <motion.div 
+                    key={stat.label} 
+                    className="p-5 bg-gradient-to-br from-ark-cream/50 to-white rounded-xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1, ease: easing.smooth }}
+                    data-testid={`stat-${stat.label.toLowerCase()}`}
+                  >
                     <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
-                    <p className="font-mono font-semibold text-foreground">
+                    <p className="font-mono font-bold text-foreground">
                       {stat.value}
-                      <span className="text-xs text-muted-foreground">{stat.suffix}</span>
+                      <span className="text-xs font-normal text-muted-foreground">{stat.suffix}</span>
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              <div className="mt-6 flex gap-3">
-                <Button className="flex-1 bg-ark-orange hover:bg-ark-orange/90" data-testid="button-buy-token">
+              <div className="flex gap-4">
+                <MagneticButton 
+                  className="flex-1 bg-ark-orange hover:bg-ark-orange text-white" 
+                  data-testid="button-buy-token"
+                >
                   Buy $ACT
-                </Button>
-                <Button variant="outline" className="border-ark-orange text-ark-orange hover:bg-ark-orange/10" data-testid="button-view-chart">
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </MagneticButton>
+                <MagneticButton 
+                  variant="outline" 
+                  className="border-foreground/20 text-foreground hover:border-ark-orange hover:text-ark-orange"
+                  data-testid="button-view-chart"
+                >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   View Chart
-                </Button>
+                </MagneticButton>
               </div>
             </Card>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8, delay: 0.4, ease: easing.cinematic }}
           >
-            <Card className="p-6 md:p-8 h-full" data-testid="card-tokenomics">
-              <h3 className="text-lg font-semibold text-foreground mb-6">Tokenomics</h3>
+            <Card className="p-8 md:p-10 h-full bg-white shadow-premium-lg border-0" data-testid="card-tokenomics">
+              <h3 className="text-xl font-bold text-foreground mb-8">Tokenomics Distribution</h3>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {[
                   { label: "Treasury (Missions)", percent: 5, color: "bg-ark-orange" },
                   { label: "Liquidity Pool", percent: 10, color: "bg-ark-magenta" },
                   { label: "Holder Reflections", percent: 3, color: "bg-gradient-to-r from-ark-orange to-ark-magenta" },
-                  { label: "Burn", percent: 2, color: "bg-gray-400" },
-                ].map((item) => (
+                  { label: "Burn", percent: 2, color: "bg-foreground/30" },
+                ].map((item, index) => (
                   <div key={item.label} data-testid={`tokenomics-${item.label.toLowerCase().replace(' ', '-')}`}>
-                    <div className="flex justify-between text-sm mb-2">
+                    <div className="flex justify-between text-sm mb-3">
                       <span className="text-muted-foreground">{item.label}</span>
-                      <span className="font-semibold text-foreground">{item.percent}%</span>
+                      <span className="font-bold text-foreground">{item.percent}%</span>
                     </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full ${item.color} rounded-full`}
-                        style={{ width: `${item.percent * 5}%` }}
-                      />
-                    </div>
+                    <AnimatedProgress percent={item.percent} color={item.color} delay={0.6 + index * 0.1} />
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 p-4 bg-gradient-to-br from-ark-orange/10 to-ark-magenta/10 rounded-xl">
-                <h4 className="font-semibold text-foreground mb-2">Why Hold $ACT?</h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
-                    Earn passive reflections on every transaction
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
-                    Vote on community missions and proposals
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
-                    Access exclusive holder events and rewards
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
-                    Direct impact on global social causes
-                  </li>
+              <motion.div 
+                className="mt-10 p-6 bg-gradient-to-br from-ark-orange/5 via-ark-cream/50 to-ark-magenta/5 rounded-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.8, ease: easing.smooth }}
+              >
+                <h4 className="font-bold text-foreground mb-4">Why Hold $ACT?</h4>
+                <ul className="text-sm text-muted-foreground space-y-3">
+                  {[
+                    "Earn passive reflections on every transaction",
+                    "Vote on community missions and proposals",
+                    "Access exclusive holder events and rewards",
+                    "Direct impact on global social causes",
+                  ].map((item, i) => (
+                    <motion.li 
+                      key={i}
+                      className="flex items-center gap-3"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ duration: 0.4, delay: 1 + i * 0.1 }}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-ark-orange to-ark-magenta flex-shrink-0" />
+                      {item}
+                    </motion.li>
+                  ))}
                 </ul>
-              </div>
+              </motion.div>
             </Card>
           </motion.div>
         </div>

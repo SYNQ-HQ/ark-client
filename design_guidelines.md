@@ -99,15 +99,61 @@
 - Social icons in orange on hover
 - Bottom bar: Copyright, language selector
 
+## Premium Motion System (Apple/Tesla/Spotify-Inspired)
+
+**Animation Physics**:
+- Low-friction, inertia-based motion with smooth deceleration
+- Primary easing curve: cubic-bezier(0.25, 0.1, 0.25, 1) - smooth
+- Cinematic entrance: cubic-bezier(0.16, 1, 0.3, 1) - slow start, smooth finish
+- Overshoot effect: cubic-bezier(0.34, 1.56, 0.64, 1) - playful interactions
+- Micro-bounce for button clicks: cubic-bezier(0.68, -0.55, 0.265, 1.55)
+
+**Transitions**:
+- Fade-through with blur: opacity 0 → 1 combined with filter: blur(10px) → blur(0px)
+- Lift-with-opacity: y: 40px → 0 combined with opacity animation
+- Staggered reveals: staggerChildren: 0.1s, delayChildren: 0.2s
+- Soft parallax on scroll using GSAP ScrollTrigger (speed: 0.3-0.5)
+- Progressive blur-to-crisp for images: blur(20px) → blur(0px) on load
+
+**UI Layout**:
+- Full-bleed hero sections with min-h-screen
+- Container max-width: 1400px with generous px-6 md:px-12 padding
+- Strict 8px/12px spacing system (gap-ark-sm: 8px, gap-ark-md: 12px)
+- Section padding: py-24 md:py-32 for cinematic spacing
+
+**Interaction Design**:
+- Delayed hover reactions (200-300ms transition duration)
+- Magnetic button feel: scale 1.04 on hover with spring physics
+- Active state: scale 0.97 with quick spring transition
+- Shadow softness: 20-40px blur, 5-10% opacity (shadow-premium utilities)
+
+**Implementation**:
+- Framer Motion for page + component transitions
+- GSAP ScrollTrigger for scroll-driven parallax effects
+- Custom MagneticButton component for premium button interactions
+- AnimatedSection wrapper for consistent reveal animations
+
+**GSAP Cleanup Requirements**:
+- Always track GSAP tweens/timelines in component-local variables
+- Kill only component-specific instances in useEffect cleanup functions
+- NEVER use `ScrollTrigger.getAll().forEach(t => t.kill())` - this breaks global animations
+- Pattern: `const tween = gsap.to(...); return () => tween.kill();`
+
+**Performance Utilities**:
+- `lazyLoad.tsx`: Lazy-loaded page components with Suspense boundaries
+- `OptimizedImage.tsx`: Progressive image loading with blur-to-crisp effect
+- Use `once: true` on useInView to prevent re-triggering animations
+
 ## Animations & Interactions
 
-**Use Sparingly - Strategic Placement Only**:
-- Hero fade-in on page load (text and illustration sequentially)
-- Section entrance: Fade up on scroll into view (Intersection Observer)
-- Token stats: Count-up effect from 0 to actual value
-- Hover micro-interactions: Button glow, card lift, icon bounce
-- Smooth scroll for anchor links (scroll-behavior: smooth)
-- NO excessive parallax, NO distracting motion
+**Strategic Animation Placement**:
+- Hero: Cinematic staggered text reveals with blur-to-crisp effect
+- Section entrance: Fade-up with blur on scroll into view (using useInView)
+- Token stats: Count-up animation with cinematic easing
+- Hover: Magnetic scaling (1.04), subtle shadow increase
+- Cards: Lift-with-shadow effect on hover (translateY(-4px))
+- Scroll indicator: Bouncing animation at hero bottom
+- Background orbs: Gentle floating animation (4s ease-in-out infinite)
 
 ## Images
 
