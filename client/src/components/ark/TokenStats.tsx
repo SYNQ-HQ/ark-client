@@ -11,7 +11,7 @@ const tokenData = {
   circulatingSupply: "75,000,000,000",
   burned: "50,000,000",
   treasuryAllocation: "5%",
-  liquidityPool: "10%",
+  liquidityPool: "15%",
   reflections: "3%",
 };
 
@@ -220,7 +220,7 @@ export default function TokenStats() {
                   },
                   {
                     label: "Liquidity Pool",
-                    percent: 10,
+                    percent: 15,
                     color: "bg-ark-magenta",
                   },
                   {

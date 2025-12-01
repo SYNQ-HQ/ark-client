@@ -8,6 +8,13 @@ import MagneticButton from "./MagneticButton";
 import { easing, heroContainer, staggerItem } from "@/lib/motion";
 import heroImage from "@assets/generated_images/web3_community_impact_ecosystem_illustration.png";
 
+const userimages = [
+  "https://img.freepik.com/free-photo/headshot-attractive-young-dark-skinned-bearded-student-stylish-jeans-shirt-smiling-cheerfully-showing-his-perfect-white-teeth-looking-sideways-with-inspired-happy-smile-horizontal_273609-1849.jpg?t=st=1764615820~exp=1764619420~hmac=b41942f3ef40335d9b7211a139677ea01e3ab6c872688136faeff07157786a97&w=1480",
+  "https://img.freepik.com/free-photo/vertical-shot-beautiful-african-american-female-standing-by-wall_181624-31768.jpg?t=st=1764616051~exp=1764619651~hmac=c9401a7d363166cf8c067ccd060cf9e40e6c1edb0c230aff25783bb731410bd7&w=1480",
+  "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-175961.jpg?t=st=1764616070~exp=1764619670~hmac=71d4479eb956db64a5c189f73e6a8c591d8976b098c8da0b066a9cc023a4297d&w=1480",
+  "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611698.jpg?t=st=1764616073~exp=1764619673~hmac=5ccfb3c34dc3b6ab12b406e201544a6d3df7226223d0bbc6c1e325eadddd6bfc&w=1480",
+];
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
@@ -177,9 +184,14 @@ export default function Hero() {
                     }}
                     className={`w-10 h-10 rounded-full ${bg} border-2 border-white flex items-center justify-center shadow-sm`}
                   >
-                    <span className="text-xs font-bold text-white">
-                      {String.fromCharCode(65 + i)}
-                    </span>
+                    {/*<span className="text-xs font-bold text-white rounded-full ">*/}
+                    {/*{String.fromCharCode(65 + i)}*/}
+                    <img
+                      src={userimages[i]}
+                      alt="Community"
+                      className="rounded-full w-full h-full object-cover"
+                    />
+                    {/*</span>*/}
                   </motion.div>
                 ))}
               </div>

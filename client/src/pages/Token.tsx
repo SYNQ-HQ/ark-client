@@ -217,7 +217,7 @@ export default function Token() {
                   },
                   {
                     label: "Liquidity Pool",
-                    percent: 10,
+                    percent: 15,
                     color: "bg-ark-magenta",
                   },
                   {

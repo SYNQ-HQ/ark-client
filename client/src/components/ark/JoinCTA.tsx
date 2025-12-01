@@ -4,14 +4,20 @@ import { ArrowRight, Users, DollarSign, Heart } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { easing } from "@/lib/motion";
 
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+function AnimatedCounter({
+  target,
+  suffix = "",
+}: {
+  target: number;
+  suffix?: string;
+}) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
     if (!isInView) return;
-    
+
     const duration = 2000;
     const steps = 60;
     const increment = target / steps;
@@ -35,14 +41,15 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
   return (
     <span ref={ref} className="font-bold">
-      {formatNumber(count)}{suffix}
+      {formatNumber(count)}
+      {suffix}
     </span>
   );
 }
 
 const stats = [
-  { icon: Users, value: 24000, suffix: "+", label: "Holders" },
-  { icon: DollarSign, value: 500, suffix: "K+", label: "Donated" },
+  { icon: Users, value: 2400, suffix: "+", label: "Holders" },
+  { icon: DollarSign, value: 50, suffix: "K+", label: "Donated" },
   { icon: Heart, value: 50, suffix: "+", label: "Missions Funded" },
 ];
 
@@ -51,25 +58,25 @@ export default function JoinCTA() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="py-24 md:py-32 relative overflow-hidden" 
+      className="py-24 md:py-32 relative overflow-hidden"
       data-testid="join-cta-section"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-ark-orange via-ark-orange to-ark-magenta" />
-      
+
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-white/10 blur-[100px]"
-          animate={{ 
+          animate={{
             x: [0, 50, 0],
             y: [0, 30, 0],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full bg-ark-magenta/40 blur-[120px]"
-          animate={{ 
+          animate={{
             x: [0, -30, 0],
             y: [0, -50, 0],
           }}
@@ -99,7 +106,11 @@ export default function JoinCTA() {
                 className="block"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+                transition={{
+                  duration: 0.8,
+                  ease: easing.cinematic,
+                  delay: 0.1,
+                }}
               >
                 Be Part of Something
               </motion.span>
@@ -109,23 +120,28 @@ export default function JoinCTA() {
                 className="block"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.2 }}
+                transition={{
+                  duration: 0.8,
+                  ease: easing.cinematic,
+                  delay: 0.2,
+                }}
               >
                 Bigger Than Yourself
               </motion.span>
             </motion.span>
           </h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4, ease: easing.smooth }}
             className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed"
           >
-            Join the global kindness economy. Buy $ACT, support real missions, and earn rewards while making the world a better place.
+            Join the global kindness economy. Buy $ACT, support real missions,
+            and earn rewards while making the world a better place.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row gap-5 justify-center pt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -149,19 +165,23 @@ export default function JoinCTA() {
             </MagneticButton>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center gap-12 pt-12"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6, ease: easing.smooth }}
           >
             {stats.map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={stat.label}
                 className="text-center"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.7 + index * 0.1, ease: easing.overshoot }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.7 + index * 0.1,
+                  ease: easing.overshoot,
+                }}
               >
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <stat.icon className="w-6 h-6 text-white/70" />
@@ -169,7 +189,9 @@ export default function JoinCTA() {
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </p>
                 </div>
-                <p className="text-sm text-white/70 font-medium">{stat.label}</p>
+                <p className="text-sm text-white/70 font-medium">
+                  {stat.label}
+                </p>
               </motion.div>
             ))}
           </motion.div>
