@@ -11,35 +11,43 @@ import { easing } from "@/lib/motion";
 const faqs = [
   {
     question: "What is $ACT and how does it work?",
-    answer: "$ACT is the native token of the ARK Movement ecosystem. When you buy or sell $ACT, a small percentage of each transaction goes to the treasury, which funds real-world social impact missions. Additionally, holders earn passive reflections from every transaction.",
+    answer:
+      "$ACT is the native token of the ARK Movement ecosystem. When you buy or sell $ACT, a small percentage of each transaction goes to the treasury, which funds real-world social impact missions. Additionally, holders earn passive reflections from every transaction.",
   },
   {
     question: "How can I buy $ACT tokens?",
-    answer: "You can purchase $ACT on PancakeSwap using BNB. Simply connect your wallet (like MetaMask or Trust Wallet), swap BNB for $ACT using our contract address, and you're part of the movement. Make sure to set slippage to 12-15% for successful transactions.",
+    answer:
+      "You can purchase $ACT on PancakeSwap using BNB. Simply connect your wallet (like MetaMask or Trust Wallet), swap BNB for $ACT using our contract address, and you're part of the movement. Make sure to set slippage to 12-15% for successful transactions.",
   },
   {
     question: "What percentage goes to charity?",
-    answer: "5% of every transaction goes directly to the ARK Treasury, which exclusively funds vetted social impact missions. This is in addition to the 3% holder reflections and 2% burn mechanism that increases token scarcity.",
+    answer:
+      "5% of every transaction goes directly to the ARK Treasury, which exclusively funds vetted social impact missions. This is in addition to the 3% holder reflections and 2% burn mechanism that increases token scarcity.",
   },
   {
     question: "How are missions selected?",
-    answer: "Missions are selected through community governance. Token holders can nominate causes they care about, and the community votes on which missions receive funding. All missions are vetted for legitimacy before being listed.",
+    answer:
+      "Missions are selected through community governance. Token holders can nominate causes they care about, and the community votes on which missions receive funding. All missions are vetted for legitimacy before being listed.",
   },
   {
     question: "Is the contract audited?",
-    answer: "Yes, our smart contract has been fully audited by CertiK, one of the leading blockchain security firms. The audit report is publicly available, and we maintain transparency in all our operations.",
+    answer:
+      "Yes, our smart contract has been fully audited by SynqLabs, one of the leading blockchain security firms. The audit report is publicly available, and we maintain transparency in all our operations.",
   },
   {
     question: "Can I nominate a cause for funding?",
-    answer: "Absolutely! Any $ACT holder can nominate a cause through our Nominate page. Provide details about the cause, why it matters, and any supporting documentation. Approved nominations go to community vote.",
+    answer:
+      "Absolutely! Any $ACT holder can nominate a cause through our Nominate page. Provide details about the cause, why it matters, and any supporting documentation. Approved nominations go to community vote.",
   },
   {
     question: "What networks is $ACT available on?",
-    answer: "Currently, $ACT is available on Binance Smart Chain (BSC). We have plans for multi-chain expansion in Q2 2025, which will include Ethereum and other major networks.",
+    answer:
+      "Currently, $ACT is available on Binance Smart Chain (BSC). We have plans for multi-chain expansion in Q2 2025, which will include Ethereum and other major networks.",
   },
   {
     question: "How do I track mission impact?",
-    answer: "All funded missions are tracked on our Impact page. You can see real-time funding progress, mission updates, photos, and final impact reports. Every transaction is verifiable on-chain for full transparency.",
+    answer:
+      "All funded missions are tracked on our Impact page. You can see real-time funding progress, mission updates, photos, and final impact reports. Every transaction is verifiable on-chain for full transparency.",
   },
 ];
 
@@ -48,9 +56,9 @@ export default function FAQ() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="py-24 md:py-32 bg-white relative overflow-hidden" 
+      className="py-24 md:py-32 bg-white relative overflow-hidden"
       data-testid="faq-section"
     >
       <div className="absolute inset-0">
@@ -72,20 +80,24 @@ export default function FAQ() {
           >
             FAQ
           </motion.span>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-[-0.02em]">
             <motion.span className="block overflow-hidden">
               <motion.span
                 className="block"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+                transition={{
+                  duration: 0.8,
+                  ease: easing.cinematic,
+                  delay: 0.1,
+                }}
               >
                 Questions & Answers
               </motion.span>
             </motion.span>
           </h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -107,7 +119,11 @@ export default function FAQ() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.05, ease: easing.smooth }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.5 + index * 0.05,
+                  ease: easing.smooth,
+                }}
               >
                 <AccordionItem
                   value={`item-${index}`}

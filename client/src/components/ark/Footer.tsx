@@ -50,7 +50,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-foreground text-white relative overflow-hidden" data-testid="footer">
+    <footer
+      className="bg-foreground text-white relative overflow-hidden"
+      data-testid="footer"
+    >
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-ark-orange/5 blur-[100px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-ark-magenta/5 blur-[80px]" />
@@ -59,20 +62,29 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative">
         <div className="py-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
           <div className="col-span-2 lg:col-span-2">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3 mb-6"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center shadow-lg shadow-ark-orange/30">
+              {/*<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center shadow-lg shadow-ark-orange/30">
                 <span className="text-white font-bold text-2xl">A</span>
               </div>
-              <span className="font-bold text-2xl tracking-tight">ARK</span>
+              <span className="font-bold text-2xl tracking-tight">ARK</span>*/}
+              <div className="w11 h-8 lg:h-14 roundedxl bg-transparent flex items-center ">
+                {/*<span className="text-white font-bold text-xl">A</span>*/}
+                <img
+                  src="/BOLT/Group 2085665131.svg"
+                  alt="ARK Logo"
+                  className="w-full h-full bg-transparent"
+                />
+              </div>
             </motion.div>
             <p className="text-gray-400 text-base mb-8 max-w-xs leading-relaxed">
-              The global kindness economy. Building a better world through Web3 social impact.
+              The global kindness economy. Building a better world through Web3
+              social impact.
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex gap-3">
+            {/*<form onSubmit={handleNewsletterSubmit} className="flex gap-3">
               <Input
                 type="email"
                 placeholder="Enter your email"
@@ -86,8 +98,8 @@ export default function Footer() {
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="bg-ark-orange hover:bg-ark-orange text-white flex-shrink-0 rounded-xl h-12 px-6"
                   data-testid="button-subscribe"
                 >
@@ -95,7 +107,7 @@ export default function Footer() {
                   {!isSubscribed && <ArrowRight className="w-4 h-4 ml-2" />}
                 </Button>
               </motion.div>
-            </form>
+            </form>*/}
           </div>
 
           {Object.entries({
@@ -110,11 +122,15 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link href={link.href}>
-                      <motion.span 
+                      <motion.span
                         className="text-sm text-gray-400 hover:text-ark-orange transition-colors duration-300 cursor-pointer inline-block"
                         whileHover={{ x: 3 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                        data-testid={`link-footer-${link.label.toLowerCase().replace(' ', '-')}`}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                        data-testid={`link-footer-${link.label.toLowerCase().replace(" ", "-")}`}
                       >
                         {link.label}
                       </motion.span>
@@ -128,7 +144,7 @@ export default function Footer() {
 
         <div className="py-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-sm text-gray-400">
-            © 2024 ARK Movement. All rights reserved.
+            © {new Date().getFullYear()} ARK Foundation. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => (

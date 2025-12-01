@@ -30,7 +30,7 @@ export default function Hero() {
 
     const orbs = containerRef.current.querySelectorAll(".floating-orb");
     const tweens: gsap.core.Tween[] = [];
-    
+
     orbs.forEach((orb, index) => {
       const tween = gsap.to(orb, {
         y: index % 2 === 0 ? -20 : 20,
@@ -73,7 +73,7 @@ export default function Hero() {
           >
             <motion.div variants={staggerItem} className="space-y-2">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ark-orange/10 text-ark-orange text-sm font-medium">
-                <Sparkles className="w-4 h-4" />
+                {/*<Sparkles className="w-4 h-4" />*/}
                 Web3 Social Impact
               </span>
             </motion.div>
@@ -91,7 +91,11 @@ export default function Hero() {
                     className="block"
                     initial={{ y: "100%" }}
                     animate={isInView ? { y: "0%" } : { y: "100%" }}
-                    transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.3 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: easing.cinematic,
+                      delay: 0.3,
+                    }}
                   >
                     Buy{" "}
                     <span className="bg-gradient-to-r from-ark-orange via-ark-magenta to-ark-orange bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient">
@@ -100,7 +104,7 @@ export default function Hero() {
                   </motion.span>
                 </motion.span>
                 <motion.span
-                  className="block overflow-hidden"
+                  className="block overflowhidden"
                   variants={{
                     hidden: { opacity: 0 },
                     visible: { opacity: 1 },
@@ -110,7 +114,11 @@ export default function Hero() {
                     className="block text-muted-foreground/80"
                     initial={{ y: "100%" }}
                     animate={isInView ? { y: "0%" } : { y: "100%" }}
-                    transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.45 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: easing.cinematic,
+                      delay: 0.45,
+                    }}
                   >
                     Change Lives
                   </motion.span>
@@ -208,7 +216,7 @@ export default function Hero() {
             >
               <div className="absolute inset-0 bg-gradient-to-t from-ark-cream/20 to-transparent z-10 pointer-events-none" />
               <img
-                src={heroImage}
+                src={"/hero.gif"}
                 alt="ARK Web3 Community Ecosystem"
                 className="w-full h-auto object-cover"
                 data-testid="img-hero"

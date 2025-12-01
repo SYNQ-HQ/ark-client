@@ -3,40 +3,45 @@ import { motion, useInView } from "framer-motion";
 import { Shield, FileCheck, Lock, Eye } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { easing } from "@/lib/motion";
+import { array } from "zod";
 
 const trustItems = [
   {
     icon: Shield,
     title: "Audited Smart Contract",
-    description: "Our contract has been thoroughly audited by leading blockchain security firms.",
-    badge: "CertiK Verified",
+    description:
+      "Our contract has been thoroughly audited by leading blockchain security firms.",
+    badge: "SynqLabs Verified",
   },
   {
     icon: FileCheck,
     title: "KYC Verified Team",
-    description: "Core team members have completed full identity verification for transparency.",
+    description:
+      "Core team members have completed full identity verification for transparency.",
     badge: "Verified",
   },
   {
     icon: Lock,
     title: "Locked Liquidity",
-    description: "Liquidity is locked for 2 years, ensuring long-term stability and trust.",
+    description:
+      "Liquidity is locked for 2 years, ensuring long-term stability and trust.",
     badge: "2 Year Lock",
   },
   {
     icon: Eye,
     title: "On-Chain Transparency",
-    description: "All treasury movements and mission funding are visible on the blockchain.",
+    description:
+      "All treasury movements and mission funding are visible on the blockchain.",
     badge: "100% Traceable",
   },
 ];
 
 const partners = [
-  { name: "CertiK", logo: "C" },
-  { name: "Binance", logo: "B" },
-  { name: "PancakeSwap", logo: "P" },
-  { name: "CoinGecko", logo: "CG" },
-  { name: "DexTools", logo: "D" },
+  // { name: "CertiK", logo: "C" },
+  // { name: "Binance", logo: "B" },
+  // { name: "PancakeSwap", logo: "P" },
+  // { name: "CoinGecko", logo: "CG" },
+  // { name: "DexTools", logo: "D" },
 ];
 
 export default function TrustSection() {
@@ -44,9 +49,9 @@ export default function TrustSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="py-24 md:py-32 bg-white relative overflow-hidden" 
+      className="py-24 md:py-32 bg-white relative overflow-hidden"
       data-testid="trust-section"
     >
       <div className="absolute inset-0">
@@ -68,27 +73,32 @@ export default function TrustSection() {
           >
             Security First
           </motion.span>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-[-0.02em]">
             <motion.span className="block overflow-hidden">
               <motion.span
                 className="block"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+                transition={{
+                  duration: 0.8,
+                  ease: easing.cinematic,
+                  delay: 0.1,
+                }}
               >
                 Why Trust ARK?
               </motion.span>
             </motion.span>
           </h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease: easing.smooth }}
             className="text-lg md:text-xl text-muted-foreground leading-relaxed"
           >
-            Security, transparency, and accountability are the pillars of the ARK ecosystem.
+            Security, transparency, and accountability are the pillars of the
+            ARK ecosystem.
           </motion.p>
         </motion.div>
 
@@ -97,18 +107,20 @@ export default function TrustSection() {
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-              transition={{ 
-                duration: 0.8, 
+              animate={
+                isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}
+              }
+              transition={{
+                duration: 0.8,
                 delay: 0.4 + index * 0.1,
-                ease: easing.cinematic 
+                ease: easing.cinematic,
               }}
             >
-              <Card 
-                className="p-8 h-full text-center bg-white border-0 shadow-premium hover:shadow-premium-lg transition-all duration-500 group" 
+              <Card
+                className="p-8 h-full text-center bg-white border-0 shadow-premium hover:shadow-premium-lg transition-all duration-500 group"
                 data-testid={`card-trust-${index}`}
               >
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 rounded-2xl bg-gradient-to-br from-ark-orange/10 to-ark-magenta/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-500"
                   whileHover={{ rotate: 5 }}
                 >
@@ -117,8 +129,12 @@ export default function TrustSection() {
                 <span className="inline-block px-4 py-1.5 text-xs font-semibold bg-ark-cream text-ark-orange rounded-full mb-4">
                   {item.badge}
                 </span>
-                <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                <h3 className="text-xl font-bold text-foreground mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
               </Card>
             </motion.div>
           ))}
@@ -130,25 +146,31 @@ export default function TrustSection() {
           transition={{ duration: 0.8, delay: 0.8, ease: easing.cinematic }}
           className="text-center"
         >
-          <p className="text-sm text-muted-foreground mb-8 font-medium">Trusted by industry leaders</p>
+          {/*<p className="text-sm text-muted-foreground mb-8 font-medium">
+            Trusted by industry leaders
+          </p>*/}
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
-            {partners.map((partner, index) => (
-              <motion.div
-                key={partner.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ 
-                  duration: 0.5, 
-                  delay: 1 + index * 0.1,
-                  ease: easing.overshoot 
-                }}
-                whileHover={{ scale: 1.1, y: -3 }}
-                className="w-20 h-20 rounded-2xl bg-ark-cream/80 flex items-center justify-center shadow-sm hover:shadow-premium transition-all duration-300 cursor-pointer"
-                data-testid={`partner-${partner.name.toLowerCase()}`}
-              >
-                <span className="text-2xl font-bold text-muted-foreground">{partner.logo}</span>
-              </motion.div>
-            ))}
+            {partners &&
+              Array.isArray(partners) &&
+              partners.map((partner, index) => (
+                <motion.div
+                  key={partner.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{
+                    duration: 0.5,
+                    delay: 1 + index * 0.1,
+                    ease: easing.overshoot,
+                  }}
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  className="w-20 h-20 rounded-2xl bg-ark-cream/80 flex items-center justify-center shadow-sm hover:shadow-premium transition-all duration-300 cursor-pointer"
+                  data-testid={`partner-${partner.name.toLowerCase()}`}
+                >
+                  <span className="text-2xl font-bold text-muted-foreground">
+                    {partner.logo}
+                  </span>
+                </motion.div>
+              ))}
           </div>
         </motion.div>
       </div>

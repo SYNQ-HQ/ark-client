@@ -42,10 +42,10 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
   }, []);
 
   return (
-    <motion.header 
+    <motion.header
       className={`sticky top-0 z-50 w-full transition-all duration-500 ${
-        scrolled 
-          ? "bg-white/90 backdrop-blur-xl shadow-premium-sm" 
+        scrolled
+          ? "bg-white/90 backdrop-blur-xl shadow-premium-sm"
           : "bg-transparent"
       }`}
       initial={{ y: -100 }}
@@ -56,16 +56,24 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between h-20">
           <Link href="/">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3 cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               data-testid="link-logo"
             >
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center shadow-lg shadow-ark-orange/20">
-                <span className="text-white font-bold text-xl">A</span>
+              {/*<div className="w11 h-10 lg:h-20 roundedxl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center shadow-lg shadow-ark-orange/20">*/}
+              <div className="w11 h-9 lg:h-16 roundedxl bg-transparent flex items-center ">
+                {/*<span className="text-white font-bold text-xl">A</span>*/}
+                <img
+                  src="/logo.png"
+                  alt="ARK Logo"
+                  className="w-full h-full bg-transparent"
+                />
               </div>
-              <span className="font-bold text-xl text-foreground tracking-tight">ARK</span>
+              {/*<span className="font-bold text-xl text-foreground tracking-tight">
+                <img src="/BOLT/Group 2085665132.svg" alt="ARK Logo" />
+              </span>*/}
             </motion.div>
           </Link>
 
@@ -103,7 +111,11 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
                     <motion.div
                       className="absolute bottom-0 left-4 right-4 h-0.5 bg-ark-orange rounded-full"
                       layoutId="navIndicator"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </motion.div>
@@ -112,9 +124,9 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Select value={language} onValueChange={onLanguageChange}>
-              <SelectTrigger 
-                className="w-20 h-9 text-xs border-foreground/10 bg-transparent hover:bg-ark-cream/50 transition-colors" 
+            {/*<Select value={language} onValueChange={onLanguageChange}>
+              <SelectTrigger
+                className="w-20 h-9 text-xs border-foreground/10 bg-transparent hover:bg-ark-cream/50 transition-colors"
                 data-testid="select-language"
               >
                 <SelectValue />
@@ -124,7 +136,7 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
                 <SelectItem value="ES">ES</SelectItem>
                 <SelectItem value="FR">FR</SelectItem>
               </SelectContent>
-            </Select>
+            </Select>*/}
 
             <motion.div
               whileHover={{ scale: 1.04 }}
@@ -142,11 +154,18 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" data-testid="button-mobile-menu">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  data-testid="button-mobile-menu"
+                >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80 bg-white/95 backdrop-blur-xl">
+              <SheetContent
+                side="right"
+                className="w-80 bg-white/95 backdrop-blur-xl"
+              >
                 <div className="flex flex-col gap-2 mt-8">
                   {navLinks.map((link, index) => (
                     <motion.div

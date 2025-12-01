@@ -1,4 +1,4 @@
-Here is **the ultimate, production-grade website-building prompt** you can give to **any LLM, designer, or AI website generator** to create the BEST possible website for ARK — fully aligned with everything we discussed, your colors, your sections, your product goals, your UX strategy, your UI direction, your mission, and Web3 best-practices.
+Here is **the ultimate, production-grade website-building prompt** you can give to **any LLM, designer, or AI website generator** to create the BEST possible website for ARK - fully aligned with everything we discussed, your colors, your sections, your product goals, your UX strategy, your UI direction, your mission, and Web3 best-practices.
 
 This is the **exact prompt** you can copy-paste to any AI system.
 
@@ -272,4 +272,3 @@ DO NOT leave anything half-planned — deliver a complete, premium, world-class 
 ---
 
 ## ✅ **Your all-in-one "build the perfect ARK website" prompt is ready.**
-

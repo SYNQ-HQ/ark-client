@@ -6,9 +6,10 @@ import { easing } from "@/lib/motion";
 
 const roadmapItems = [
   {
-    quarter: "Q4 2024",
+    quarter: "Phase 1",
     title: "Foundation",
-    status: "completed",
+    // status: "completed",
+    status: "current",
     items: [
       "Token launch on BSC",
       "Community building",
@@ -17,9 +18,9 @@ const roadmapItems = [
     ],
   },
   {
-    quarter: "Q1 2025",
+    quarter: "Phase 2",
     title: "Growth",
-    status: "current",
+    status: "upcoming",
     items: [
       "CEX listings",
       "Mobile app launch",
@@ -28,7 +29,7 @@ const roadmapItems = [
     ],
   },
   {
-    quarter: "Q2 2025",
+    quarter: "Phase 3",
     title: "Expansion",
     status: "upcoming",
     items: [
@@ -39,7 +40,7 @@ const roadmapItems = [
     ],
   },
   {
-    quarter: "Q3 2025",
+    quarter: "Phase 4",
     title: "Scale",
     status: "upcoming",
     items: [
@@ -58,7 +59,7 @@ export default function Roadmap() {
 
   useEffect(() => {
     if (!isInView || !progressRef.current) return;
-    
+
     const tween = gsap.fromTo(
       progressRef.current,
       { width: "0%" },
@@ -67,7 +68,7 @@ export default function Roadmap() {
         duration: 1.2,
         delay: 0.4,
         ease: "power2.out",
-      }
+      },
     );
 
     return () => {
@@ -76,9 +77,9 @@ export default function Roadmap() {
   }, [isInView]);
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="py-24 md:py-32 bg-gradient-to-b from-ark-cream to-white relative overflow-hidden" 
+      className="py-24 md:py-32 bg-gradient-to-b from-ark-cream to-white relative overflow-hidden"
       data-testid="roadmap-section"
     >
       <div className="absolute inset-0">
@@ -100,33 +101,38 @@ export default function Roadmap() {
           >
             Our Journey
           </motion.span>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-[-0.02em]">
             <motion.span className="block overflow-hidden">
               <motion.span
                 className="block"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+                transition={{
+                  duration: 0.8,
+                  ease: easing.cinematic,
+                  delay: 0.1,
+                }}
               >
                 Roadmap
               </motion.span>
             </motion.span>
           </h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease: easing.smooth }}
             className="text-lg md:text-xl text-muted-foreground leading-relaxed"
           >
-            Our journey to building the world's largest Web3 social impact ecosystem.
+            Our journey to building the world's largest Web3 social impact
+            ecosystem.
           </motion.p>
         </motion.div>
 
         <div className="relative">
           <div className="hidden lg:block absolute top-[72px] left-[12.5%] right-[12.5%] h-[3px] bg-gray-100 rounded-full">
-            <div 
+            <div
               ref={progressRef}
               className="h-full bg-gradient-to-r from-ark-orange to-ark-magenta rounded-full"
               style={{ width: "0%" }}
@@ -138,23 +144,25 @@ export default function Roadmap() {
               <motion.div
                 key={item.quarter}
                 initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-                animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-                transition={{ 
-                  duration: 0.8, 
+                animate={
+                  isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}
+                }
+                transition={{
+                  duration: 0.8,
                   delay: 0.4 + index * 0.15,
-                  ease: easing.cinematic 
+                  ease: easing.cinematic,
                 }}
                 className="relative"
-                data-testid={`roadmap-${item.quarter.toLowerCase().replace(' ', '-')}`}
+                data-testid={`roadmap-${item.quarter.toLowerCase().replace(" ", "-")}`}
               >
                 <div className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 z-10">
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : {}}
-                    transition={{ 
-                      duration: 0.5, 
+                    transition={{
+                      duration: 0.5,
                       delay: 0.6 + index * 0.15,
-                      ease: easing.overshoot 
+                      ease: easing.overshoot,
                     }}
                   >
                     {item.status === "completed" ? (
@@ -172,20 +180,25 @@ export default function Roadmap() {
                   </motion.div>
                 </div>
 
-                <motion.div 
+                <motion.div
                   className={`mt-16 lg:mt-20 p-8 rounded-2xl bg-white border transition-all duration-500 ${
-                    item.status === "current" 
-                      ? "border-ark-magenta/30 shadow-premium-lg" 
+                    item.status === "current"
+                      ? "border-ark-magenta/30 shadow-premium-lg"
                       : "border-gray-100 shadow-premium hover:shadow-premium-lg"
                   }`}
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <span className={`text-sm font-bold ${
-                      item.status === "completed" ? "text-ark-orange" : 
-                      item.status === "current" ? "text-ark-magenta" : "text-muted-foreground"
-                    }`}>
+                    <span
+                      className={`text-sm font-bold ${
+                        item.status === "completed"
+                          ? "text-ark-orange"
+                          : item.status === "current"
+                            ? "text-ark-magenta"
+                            : "text-muted-foreground"
+                      }`}
+                    >
                       {item.quarter}
                     </span>
                     {item.status === "current" && (
@@ -194,19 +207,28 @@ export default function Roadmap() {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-5">{item.title}</h3>
+                  <h3 className="text-2xl font-bold text-foreground mb-5">
+                    {item.title}
+                  </h3>
                   <ul className="space-y-3">
                     {item.items.map((listItem, i) => (
-                      <motion.li 
-                        key={i} 
+                      <motion.li
+                        key={i}
                         className="flex items-start gap-3 text-sm text-muted-foreground"
                         initial={{ opacity: 0, x: -10 }}
                         animate={isInView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ duration: 0.4, delay: 0.8 + index * 0.15 + i * 0.05 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.8 + index * 0.15 + i * 0.05,
+                        }}
                       >
-                        <ChevronRight className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
-                          item.status === "completed" ? "text-ark-orange" : "text-gray-300"
-                        }`} />
+                        <ChevronRight
+                          className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                            item.status === "completed"
+                              ? "text-ark-orange"
+                              : "text-gray-300"
+                          }`}
+                        />
                         {listItem}
                       </motion.li>
                     ))}

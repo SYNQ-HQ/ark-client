@@ -14,7 +14,8 @@ const missions = [
     title: "Clean Water Initiative",
     location: "Kenya, Africa",
     date: "Dec 15, 2024",
-    image: "https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=400&h=250&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=400&h=250&fit=crop",
     raised: 45000,
     goal: 50000,
     supporters: 1234,
@@ -25,7 +26,8 @@ const missions = [
     title: "Community Food Bank",
     location: "Los Angeles, USA",
     date: "Dec 20, 2024",
-    image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400&h=250&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400&h=250&fit=crop",
     raised: 28000,
     goal: 35000,
     supporters: 856,
@@ -36,7 +38,8 @@ const missions = [
     title: "Youth Education Program",
     location: "Mumbai, India",
     date: "Jan 5, 2025",
-    image: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&h=250&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&h=250&fit=crop",
     raised: 62000,
     goal: 75000,
     supporters: 2103,
@@ -49,9 +52,9 @@ export default function MissionCards() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="py-24 md:py-32 bg-gradient-to-b from-white to-ark-cream relative overflow-hidden" 
+      className="py-24 md:py-32 bg-gradient-to-b from-white to-ark-cream relative overflow-hidden"
       data-testid="missions-section"
     >
       <div className="absolute inset-0">
@@ -74,30 +77,35 @@ export default function MissionCards() {
             >
               Live Impact
             </motion.span>
-            
+
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-[-0.02em]">
               <motion.span className="block overflow-hidden">
                 <motion.span
                   className="block"
                   initial={{ y: "100%" }}
                   animate={isInView ? { y: "0%" } : { y: "100%" }}
-                  transition={{ duration: 0.8, ease: easing.cinematic, delay: 0.1 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: easing.cinematic,
+                    delay: 0.1,
+                  }}
                 >
                   Active Missions
                 </motion.span>
               </motion.span>
             </h2>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3, ease: easing.smooth }}
               className="text-lg md:text-xl text-muted-foreground max-w-2xl"
             >
-              Real impact, real communities. See where your $ACT tokens are making a difference.
+              Real impact, real communities. See where your $ACT tokens are
+              making a difference.
             </motion.p>
           </div>
-          
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -121,15 +129,17 @@ export default function MissionCards() {
             <motion.div
               key={mission.id}
               initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-              transition={{ 
-                duration: 0.8, 
+              animate={
+                isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}
+              }
+              transition={{
+                duration: 0.8,
                 delay: 0.4 + index * 0.15,
-                ease: easing.cinematic 
+                ease: easing.cinematic,
               }}
             >
-              <Card 
-                className="overflow-hidden bg-white border-0 shadow-premium hover:shadow-premium-xl transition-all duration-500 group" 
+              <Card
+                className="overflow-hidden bg-white border-0 shadow-premium hover:shadow-premium-xl transition-all duration-500 group"
                 data-testid={`card-mission-${mission.id}`}
               >
                 <div className="relative h-52 overflow-hidden">
@@ -145,12 +155,12 @@ export default function MissionCards() {
                     Active
                   </Badge>
                 </div>
-                
+
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-ark-orange transition-colors duration-300">
                     {mission.title}
                   </h3>
-                  
+
                   <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-5">
                     <span className="flex items-center gap-1.5">
                       <MapPin className="w-4 h-4" />
@@ -166,11 +176,17 @@ export default function MissionCards() {
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Raised</span>
                       <span className="font-bold text-foreground">
-                        ${mission.raised.toLocaleString()} 
-                        <span className="font-normal text-muted-foreground"> / ${mission.goal.toLocaleString()}</span>
+                        ${mission.raised.toLocaleString()}
+                        <span className="font-normal text-muted-foreground">
+                          {" "}
+                          / ${mission.goal.toLocaleString()}
+                        </span>
                       </span>
                     </div>
-                    <Progress value={(mission.raised / mission.goal) * 100} className="h-2" />
+                    <Progress
+                      value={(mission.raised / mission.goal) * 100}
+                      className="h-2"
+                    />
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -178,13 +194,13 @@ export default function MissionCards() {
                       <Users className="w-4 h-4" />
                       {mission.supporters.toLocaleString()} supporters
                     </span>
-                    <MagneticButton 
-                      size="sm" 
+                    {/*<MagneticButton
+                      size="sm"
                       className="bg-ark-orange hover:bg-ark-orange text-white"
                       data-testid={`button-support-${mission.id}`}
                     >
                       Support
-                    </MagneticButton>
+                    </MagneticButton>*/}
                   </div>
                 </div>
               </Card>
