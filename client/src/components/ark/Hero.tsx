@@ -216,7 +216,7 @@ export default function Hero() {
             >
               <div className="absolute inset-0 bg-gradient-to-t from-ark-cream/20 to-transparent z-10 pointer-events-none" />
               <img
-                src={"/hero.gif"}
+                src={"https://i.ibb.co/hFhcryjC/hero.gif"}
                 alt="ARK Web3 Community Ecosystem"
                 className="w-full h-auto object-cover"
                 data-testid="img-hero"
