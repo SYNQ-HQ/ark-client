@@ -31,10 +31,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Send, href: "#", label: "Telegram" },
-  { icon: MessageCircle, href: "#", label: "Discord" },
-  { icon: Github, href: "#", label: "GitHub" },
+  { icon: Twitter, href: "https://x.com/ArkCharityToken", label: "Twitter" },
+  // { icon: Send, href: "#", label: "Telegram" },
+  // { icon: MessageCircle, href: "#", label: "Discord" },
+  // { icon: Github, href: "#", label: "GitHub" },
 ];
 
 export default function Footer() {
