@@ -7,8 +7,8 @@ import { easing } from "@/lib/motion";
 
 const tokenData = {
   contractAddress: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-  totalSupply: "500,000, 000,000,000",
-  circulatingSupply: "850,000,000",
+  totalSupply: "500,000,000,000",
+  circulatingSupply: "75,000,000,000",
   burned: "50,000,000",
   treasuryAllocation: "5%",
   liquidityPool: "10%",
