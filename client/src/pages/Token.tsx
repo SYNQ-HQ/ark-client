@@ -91,7 +91,7 @@ export default function Token() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            <span className="bg-gradient-to-r from-ark-orange to-ark-magenta bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r  text-ark-orange  from-ark-orange to-ark-magenta bg-clip-text text-transparent">
               $ACT
             </span>{" "}
             Token
@@ -212,7 +212,7 @@ export default function Token() {
                 {[
                   {
                     label: "Treasury (Missions)",
-                    percent: 5,
+                    percent: 10,
                     color: "bg-ark-orange",
                   },
                   {
@@ -222,10 +222,10 @@ export default function Token() {
                   },
                   {
                     label: "Holder Reflections",
-                    percent: 3,
+                    percent: 7,
                     color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
                   },
-                  { label: "Burn", percent: 2, color: "bg-gray-400" },
+                  { label: "Burn", percent: 5, color: "bg-gray-400" },
                 ].map((item) => (
                   <div key={item.label}>
                     <div className="flex justify-between text-sm mb-2">
@@ -239,7 +239,7 @@ export default function Token() {
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className={`h-full ${item.color} rounded-full`}
-                        style={{ width: `${item.percent * 5}%` }}
+                        style={{ width: `${item.percent}%` }}
                       />
                     </div>
                   </div>

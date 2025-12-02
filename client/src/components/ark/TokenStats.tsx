@@ -12,7 +12,7 @@ const tokenData = {
   burned: "50,000,000",
   treasuryAllocation: "5%",
   liquidityPool: "15%",
-  reflections: "3%",
+  reflections: "7%",
 };
 
 const stats = [
@@ -37,7 +37,7 @@ function AnimatedProgress({
 
   useEffect(() => {
     if (isInView) {
-      const timer = setTimeout(() => setWidth(percent * 5), delay * 1000);
+      const timer = setTimeout(() => setWidth(percent), delay * 1000);
       return () => clearTimeout(timer);
     }
   }, [isInView, percent, delay]);
@@ -215,7 +215,7 @@ export default function TokenStats() {
                 {[
                   {
                     label: "Treasury (Missions)",
-                    percent: 5,
+                    percent: 10,
                     color: "bg-ark-orange",
                   },
                   {
@@ -225,10 +225,10 @@ export default function TokenStats() {
                   },
                   {
                     label: "Holder Reflections",
-                    percent: 3,
+                    percent: 7,
                     color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
                   },
-                  { label: "Burn", percent: 2, color: "bg-foreground/30" },
+                  { label: "Burn", percent: 5, color: "bg-foreground/30" },
                 ].map((item, index) => (
                   <div
                     key={item.label}
