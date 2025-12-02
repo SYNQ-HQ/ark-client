@@ -117,7 +117,7 @@ export default function WhitepaperViewer() {
               <p className="text-sm text-muted-foreground mb-4">
                 Last updated: November 2025
                 <br />
-                38 pages
+                {numPages} pages
               </p>
               <div className="space-y-3">
                 <Button
