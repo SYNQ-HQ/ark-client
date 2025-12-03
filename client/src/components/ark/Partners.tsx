@@ -63,7 +63,7 @@ export default function PartnerStrip() {
                 <img
                   src={p.logo}
                   alt={p.name}
-                  className="max-h-10 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
+                  className="max-h-20 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
                 />
               </div>
               <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
