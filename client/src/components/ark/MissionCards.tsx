@@ -15,7 +15,7 @@ const missions = [
     location: "Kenya, Africa",
     date: "Dec 15, 2024",
     image:
-      "https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1584789900013-7eb27b6dae05?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2xlYW4lMjBXYXRlciUyMEluaXRpYXRpdmUlMjBhZnJpY2F8ZW58MHx8MHx8fDA%3D",
     raised: 4500,
     goal: 5000,
     supporters: 147,
@@ -27,7 +27,7 @@ const missions = [
     location: "Sokoto, Nigeria",
     date: "Dec 20, 2024",
     image:
-      "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1591503049013-993ae5cf7e7c?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fENvbW11bml0eSUyMEZvb2QlMjBCYW5rJTIwYWZyaWNhfGVufDB8fDB8fHww",
     raised: 2800,
     goal: 3500,
     supporters: 102,
@@ -39,8 +39,8 @@ const missions = [
     location: "Lagos, Nigeria",
     date: "Jan 5, 2025",
     image:
-      "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&h=250&fit=crop",
-    raised: 10000,
+      "https://images.unsplash.com/photo-1761039808597-5639866bab8a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8WW91dGglMjBFZHVjYXRpb24lMjBQcm9ncmFtJTIwYWZyaWNhfGVufDB8fDB8fHww",
+    raised: 9378,
     goal: 7500,
     supporters: 243,
     status: "active",
