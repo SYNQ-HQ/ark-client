@@ -19,7 +19,8 @@ const stats = [
   { label: "Total Supply", value: tokenData.totalSupply, suffix: " $ACT" },
   { label: "Circulating", value: tokenData.circulatingSupply, suffix: " $ACT" },
   { label: "Burned", value: tokenData.burned, suffix: " $ACT" },
-  { label: "Reflections", value: tokenData.reflections, suffix: " per tx" },
+  // { label: "Reflections", value: tokenData.reflections, suffix: " per tx" },
+  { label: "Reflections", value: tokenData.reflections, suffix: "" },
 ];
 
 function AnimatedProgress({

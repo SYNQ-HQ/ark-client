@@ -48,7 +48,7 @@ function AnimatedCounter({
 }
 
 const stats = [
-  { icon: Users, value: 240, suffix: "+", label: "Holders" },
+  { icon: Users, value: 2400, suffix: "+", label: "Holders" },
   { icon: DollarSign, value: 13, suffix: "K+", label: "Donated" },
   { icon: Heart, value: 17, suffix: "+", label: "Missions Funded" },
 ];
