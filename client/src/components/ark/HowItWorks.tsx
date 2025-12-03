@@ -4,13 +4,19 @@ import { gsap } from "gsap";
 import { Wallet, Heart, TrendingUp } from "lucide-react";
 import { easing } from "@/lib/motion";
 
+// Download peniwallet from Store
+// fund with BNB
+// copy athe arc contract address
+// paste in PeniWallet
+// swap your bnb to arc
+
 const steps = [
   {
     number: "01",
     icon: Wallet,
     title: "Buy $ACT Tokens",
     description:
-      "Purchase $ACT on Pancake Swap using your favorite BSC crypto wallet. A portion of every transaction funds community missions.",
+      'Download <a class="underline" href="https://peniwallet.com" target="_blank" rel="noopener">Peniwallet</a> from your App Store (it’s the official ARK partner), fund with BNB, copy the $ACT contract address, paste in Peniwallet, swap your BNB to $ACT and be part of the global kindness economy.',
   },
   {
     number: "02",
@@ -158,9 +164,14 @@ export default function HowItWorks() {
                   <h3 className="text-2xl font-bold text-foreground mb-4">
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                  {/*<p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
                     {step.description}
-                  </p>
+                  </p>*/}
+
+                  <p
+                    className="text-muted-foreground leading-relaxed max-w-xs mx-auto"
+                    dangerouslySetInnerHTML={{ __html: step.description }}
+                  />
                 </div>
               </motion.div>
             ))}

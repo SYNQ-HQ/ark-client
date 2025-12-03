@@ -7,6 +7,7 @@ import TrustSection from "@/components/ark/TrustSection";
 import Roadmap from "@/components/ark/Roadmap";
 import FAQ from "@/components/ark/FAQ";
 import JoinCTA from "@/components/ark/JoinCTA";
+import PartnerStrip from "@/components/ark/Partners";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <MissionCards />
       <TrustSection />
       <Roadmap />
+      <PartnerStrip />
       <FAQ />
       <JoinCTA />
     </main>
