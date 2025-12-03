@@ -203,7 +203,7 @@ export default function Hero() {
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.6, delay: 1 }}
                   >
-                    24,500+
+                    3,250+
                   </motion.span>{" "}
                   community members
                 </p>

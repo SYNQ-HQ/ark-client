@@ -48,9 +48,9 @@ function AnimatedCounter({
 }
 
 const stats = [
-  { icon: Users, value: 2400, suffix: "+", label: "Holders" },
-  { icon: DollarSign, value: 50, suffix: "K+", label: "Donated" },
-  { icon: Heart, value: 50, suffix: "+", label: "Missions Funded" },
+  { icon: Users, value: 240, suffix: "+", label: "Holders" },
+  { icon: DollarSign, value: 13, suffix: "K+", label: "Donated" },
+  { icon: Heart, value: 17, suffix: "+", label: "Missions Funded" },
 ];
 
 export default function JoinCTA() {

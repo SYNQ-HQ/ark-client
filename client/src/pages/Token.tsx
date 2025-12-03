@@ -98,7 +98,7 @@ export default function Token() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             The heart of the ARK ecosystem. Hold, trade, and earn while making a
-            difference.
+            difference.$ACT
           </p>
         </motion.div>
 
@@ -222,7 +222,7 @@ export default function Token() {
                   },
                   {
                     label: "Holder Reflections",
-                    percent: 7,
+                    percent: 5,
                     color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
                   },
                   { label: "Burn", percent: 5, color: "bg-gray-400" },

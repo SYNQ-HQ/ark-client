@@ -14,12 +14,66 @@ import { MapPin, Calendar, Users, ArrowRight } from "lucide-react";
 
 // todo: remove mock functionality
 const missions = [
-  { id: 1, title: "Clean Water Initiative", location: "Kenya", date: "Dec 15, 2024", month: "12", year: "2024", supporters: 1234, status: "upcoming" },
-  { id: 2, title: "Community Food Bank", location: "Los Angeles, USA", date: "Dec 20, 2024", month: "12", year: "2024", supporters: 856, status: "upcoming" },
-  { id: 3, title: "Youth Education Program", location: "Mumbai, India", date: "Jan 5, 2025", month: "01", year: "2025", supporters: 2103, status: "upcoming" },
-  { id: 4, title: "Homeless Shelter Support", location: "New York, USA", date: "Jan 12, 2025", month: "01", year: "2025", supporters: 543, status: "upcoming" },
-  { id: 5, title: "Ocean Cleanup Drive", location: "Bali, Indonesia", date: "Jan 20, 2025", month: "01", year: "2025", supporters: 789, status: "upcoming" },
-  { id: 6, title: "Medical Supplies Donation", location: "Haiti", date: "Feb 3, 2025", month: "02", year: "2025", supporters: 1567, status: "upcoming" },
+  {
+    id: 1,
+    title: "Solar Borehole – Zinder, Niger",
+    location: "Niger",
+    date: "Dec 15, 2024",
+    month: "12",
+    year: "2024",
+    supporters: 1234,
+    status: "upcoming",
+  },
+  {
+    id: 2,
+    title: "Girl’s Hygiene Kits – Maradi, Niger",
+    location: "Niger",
+    date: "Dec 20, 2024",
+    month: "12",
+    year: "2024",
+    supporters: 856,
+    status: "upcoming",
+  },
+  {
+    id: 3,
+    title: "Sesame Seed Packs – Dori, Burkina Faso",
+    location: "Burkina Faso",
+    date: "Jan 5, 2025",
+    month: "01",
+    year: "2025",
+    supporters: 2103,
+    status: "upcoming",
+  },
+  {
+    id: 4,
+    title: "Refugee Water Bladders – N’Djamena, Chad",
+    location: "Chad",
+    date: "Jan 12, 2025",
+    month: "01",
+    year: "2025",
+    supporters: 543,
+    status: "upcoming",
+  },
+  {
+    id: 5,
+    title: "Solar Study Lamps – Katsina, Nigeria",
+    location: "Nigeria",
+    date: "Jan 20, 2025",
+    month: "01",
+    year: "2025",
+    supporters: 789,
+    status: "upcoming",
+  },
+  {
+    id: 6,
+    title: "Cataract Surgeries – Kano, Nigeria",
+    location: "Nigeria",
+    date: "Feb 3, 2025",
+    month: "02",
+    year: "2025",
+    supporters: 1567,
+    status: "upcoming",
+  },
 ];
 
 const months = [
@@ -40,13 +94,17 @@ export default function MissionCalendar() {
   const [selectedYear, setSelectedYear] = useState("all");
 
   const filteredMissions = missions.filter((mission) => {
-    const matchMonth = selectedMonth === "all" || mission.month === selectedMonth;
+    const matchMonth =
+      selectedMonth === "all" || mission.month === selectedMonth;
     const matchYear = selectedYear === "all" || mission.year === selectedYear;
     return matchMonth && matchYear;
   });
 
   return (
-    <section className="py-20 md:py-28 bg-white" data-testid="mission-calendar-section">
+    <section
+      className="py-20 md:py-28 bg-white"
+      data-testid="mission-calendar-section"
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +117,8 @@ export default function MissionCalendar() {
             Mission Calendar
           </h2>
           <p className="text-lg text-muted-foreground">
-            See all upcoming missions and plan your participation in the kindness economy.
+            See all upcoming missions and plan your participation in the
+            kindness economy.
           </p>
         </motion.div>
 
@@ -99,19 +158,26 @@ export default function MissionCalendar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <Card className="p-5 hover-elevate group" data-testid={`calendar-mission-${mission.id}`}>
+              <Card
+                className="p-5 hover-elevate group"
+                data-testid={`calendar-mission-${mission.id}`}
+              >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-ark-orange text-white flex flex-col items-center justify-center">
                     <span className="text-xs uppercase">
-                      {new Date(mission.date).toLocaleDateString('en-US', { month: 'short' })}
+                      {new Date(mission.date).toLocaleDateString("en-US", {
+                        month: "short",
+                      })}
                     </span>
                     <span className="text-xl font-bold">
                       {new Date(mission.date).getDate()}
                     </span>
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground mb-1 truncate">{mission.title}</h3>
+                    <h3 className="font-semibold text-foreground mb-1 truncate">
+                      {mission.title}
+                    </h3>
                     <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
@@ -124,15 +190,23 @@ export default function MissionCalendar() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 flex items-center justify-between">
-                  <Badge variant="secondary" className="bg-ark-cream text-ark-orange">
+                  <Badge
+                    variant="secondary"
+                    className="bg-ark-cream text-ark-orange"
+                  >
                     Upcoming
                   </Badge>
-                  <Button size="sm" variant="ghost" className="text-ark-orange hover:text-ark-orange" data-testid={`button-learn-more-${mission.id}`}>
+                  {/*<Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-ark-orange hover:text-ark-orange"
+                    data-testid={`button-learn-more-${mission.id}`}
+                  >
                     Learn More
                     <ArrowRight className="w-3 h-3 ml-1" />
-                  </Button>
+                  </Button>*/}
                 </div>
               </Card>
             </motion.div>

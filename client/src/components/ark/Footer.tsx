@@ -32,7 +32,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: "https://x.com/ArkCharityToken", label: "Twitter" },
-  // { icon: Send, href: "#", label: "Telegram" },
+  { icon: Send, href: "https://t.me/arkcharitytoken", label: "Telegram" },
   // { icon: MessageCircle, href: "#", label: "Discord" },
   // { icon: Github, href: "#", label: "GitHub" },
 ];

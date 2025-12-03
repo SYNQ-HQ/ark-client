@@ -225,7 +225,7 @@ export default function TokenStats() {
                   },
                   {
                     label: "Holder Reflections",
-                    percent: 7,
+                    percent: 5,
                     color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
                   },
                   { label: "Burn", percent: 5, color: "bg-foreground/30" },

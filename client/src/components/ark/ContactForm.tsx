@@ -28,7 +28,10 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <section className="py-20 md:py-28 bg-ark-cream" data-testid="contact-form-section">
+      <section
+        className="py-20 md:py-28 bg-ark-cream"
+        data-testid="contact-form-section"
+      >
         <div className="max-w-xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -38,14 +41,21 @@ export default function ContactForm() {
               <div className="w-16 h-16 rounded-full bg-ark-orange/10 flex items-center justify-center mx-auto mb-4">
                 <Check className="w-8 h-8 text-ark-orange" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Message Sent!</h3>
+              <h3 className="text-xl font-bold text-foreground mb-2">
+                Message Sent!
+              </h3>
               <p className="text-muted-foreground mb-6">
                 We'll get back to you as soon as possible.
               </p>
               <Button
                 onClick={() => {
                   setSubmitted(false);
-                  setFormData({ name: "", email: "", subject: "", message: "" });
+                  setFormData({
+                    name: "",
+                    email: "",
+                    subject: "",
+                    message: "",
+                  });
                 }}
                 variant="outline"
                 className="border-ark-orange text-ark-orange hover:bg-ark-orange/10"
@@ -61,7 +71,10 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="py-20 md:py-28 bg-ark-cream" data-testid="contact-form-section">
+    <section
+      className="py-20 md:py-28 bg-ark-cream"
+      data-testid="contact-form-section"
+    >
       <div className="max-w-5xl mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -162,12 +175,18 @@ export default function ContactForm() {
                   <Mail className="w-6 h-6 text-ark-orange" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Email Us</h3>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    Email Us
+                  </h3>
                   <p className="text-muted-foreground text-sm mb-2">
                     For general inquiries and support
                   </p>
-                  <a href="mailto:hello@arkmovement.io" className="text-ark-orange hover:underline" data-testid="link-email">
-                    hello@arkmovement.io
+                  <a
+                    href="mailto:hello@arkcharitytoken.com"
+                    className="text-ark-orange hover:underline"
+                    data-testid="link-email"
+                  >
+                    hello@arkcharitytoken.com
                   </a>
                 </div>
               </div>
@@ -179,18 +198,32 @@ export default function ContactForm() {
                   <MessageSquare className="w-6 h-6 text-ark-orange" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Community</h3>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    Community
+                  </h3>
                   <p className="text-muted-foreground text-sm mb-2">
                     Join our active community channels
                   </p>
                   <div className="flex gap-3">
-                    <a href="#" className="text-ark-orange hover:underline text-sm" data-testid="link-telegram">
+                    <a
+                      href="#"
+                      className="text-ark-orange hover:underline text-sm"
+                      data-testid="link-telegram"
+                    >
                       Telegram
                     </a>
-                    <a href="#" className="text-ark-orange hover:underline text-sm" data-testid="link-discord">
+                    <a
+                      href="#"
+                      className="text-ark-orange hover:underline text-sm"
+                      data-testid="link-discord"
+                    >
                       Discord
                     </a>
-                    <a href="#" className="text-ark-orange hover:underline text-sm" data-testid="link-twitter">
+                    <a
+                      href="#"
+                      className="text-ark-orange hover:underline text-sm"
+                      data-testid="link-twitter"
+                    >
                       Twitter
                     </a>
                   </div>
@@ -199,12 +232,19 @@ export default function ContactForm() {
             </Card>
 
             <Card className="p-6 bg-gradient-to-br from-ark-orange/5 to-ark-magenta/5">
-              <h3 className="font-semibold text-foreground mb-2">Partnerships</h3>
+              <h3 className="font-semibold text-foreground mb-2">
+                Partnerships
+              </h3>
               <p className="text-sm text-muted-foreground mb-3">
-                Interested in partnering with ARK? We're always looking to collaborate with like-minded organizations.
+                Interested in partnering with ARK? We're always looking to
+                collaborate with like-minded organizations.
               </p>
-              <a href="mailto:partnerships@arkmovement.io" className="text-ark-orange hover:underline text-sm" data-testid="link-partnerships">
-                partnerships@arkmovement.io
+              <a
+                href="mailto:partnerships@arkcharitytoken.com"
+                className="text-ark-orange hover:underline text-sm"
+                data-testid="link-partnerships"
+              >
+                partnerships@arkcharitytoken.com
               </a>
             </Card>
           </motion.div>
