@@ -12,7 +12,7 @@ const tokenData = {
   burned: "50,000,000",
   treasuryAllocation: "5%",
   liquidityPool: "15%",
-  reflections: "7%",
+  reflections: "5%",
 };
 
 const stats = [

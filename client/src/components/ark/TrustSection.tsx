@@ -25,7 +25,7 @@ const trustItems = [
     title: "Locked Liquidity",
     description:
       "Liquidity is locked for 2 years, ensuring long-term stability and trust.",
-    badge: "2 Year Lock",
+    badge: "24 Months Lock",
   },
   {
     icon: Eye,
