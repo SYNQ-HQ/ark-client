@@ -34,8 +34,17 @@ function AnimatedCounter({
     return () => clearInterval(timer);
   }, [target, isInView]);
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
+  // const formatNumber = (num: number) => {
+  //   if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
+  //   return num.toString();
+  // };
+
+  const formatNumber = (num: number): string => {
+    if (num >= 1000) {
+      // keep one decimal for 2.1 K, but drop it for 5 K
+      const k = num / 1000;
+      return k === Math.floor(k) ? `${k}K` : `${k.toFixed(1)}K`;
+    }
     return num.toString();
   };
 
@@ -48,7 +57,7 @@ function AnimatedCounter({
 }
 
 const stats = [
-  { icon: Users, value: 2400, suffix: "+", label: "Holders" },
+  { icon: Users, value: 2100, suffix: "+", label: "Holders" },
   { icon: DollarSign, value: 13, suffix: "K+", label: "Donated" },
   { icon: Heart, value: 17, suffix: "+", label: "Missions Funded" },
 ];
