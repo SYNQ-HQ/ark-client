@@ -13,16 +13,19 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// todo: remove mock functionality
-const tokenData = {
-  contractAddress: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-  totalSupply: "5,000,000,000",
+const DEX_API_URL =
+  "https://api.dexscreener.com/latest/dex/tokens/0x345f6423cef697926c23dc010eb1b96f8268bcec";
+const CONTRACT_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+
+const DEFAULT_DATA = {
+  contractAddress: CONTRACT_ADDRESS,
+  totalSupply: "500,000,000,000",
   circulatingSupply: "850,000,000",
   burned: "50,000,000",
-  price: 0.0024,
-  marketCap: 2400000,
-  holders: 24582,
-  volume24h: 142000,
+  price: 0,
+  marketCap: 0,
+  holders: 0,
+  volume24h: 0,
 };
 
 function AnimatedCounter({
@@ -56,7 +59,22 @@ function AnimatedCounter({
   const formatNumber = (num: number) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(2)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
-    if (num < 1) return num.toFixed(4);
+
+    // For very small numbers (crypto prices)
+    if (num < 1 && num > 0) {
+      // Count leading zeros after decimal point
+      const str = num.toFixed(20); // Get high precision
+      const match = str.match(/^0\.0*[1-9]/); // Find first non-zero digit
+
+      if (match) {
+        const leadingZeros = match[0].split("0").length - 2;
+        // Show at least 2 significant digits after leading zeros
+        return num.toFixed(Math.max(leadingZeros + 2, 8));
+      }
+      return num.toFixed(8);
+    }
+
+    if (num === 0) return "0";
     return num.toLocaleString();
   };
 
@@ -71,6 +89,81 @@ function AnimatedCounter({
 
 export default function Token() {
   const [copied, setCopied] = useState(false);
+  const [tokenData, setTokenData] = useState(DEFAULT_DATA);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  const fetchHolderCount = async () => {
+    try {
+      const url = `https://deep-index.moralis.io/api/v2.2/erc20/${CONTRACT_ADDRESS}/owners?chain=bsc&order=DESC`;
+      const response = await fetch(url, {
+        headers: {
+          "X-API-Key":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU2YWI3MTQ3LWM3NTItNDRlNi1hYzExLWUyMDc5YWZkNzhkNSIsIm9yZ0lkIjoiNDg0NDY2IiwidXNlcklkIjoiNDk4NDI4IiwidHlwZUlkIjoiZjMxMDRjNTUtODQwMS00ZTNhLThmMGQtYTE4YTZkZGNhMmM5IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3NjQ4MDAzOTIsImV4cCI6NDkyMDU2MDM5Mn0.6MIKgb_yigB4ljlVSBS3CWe-b58Tuy-1gM6rsqmBglM",
+          accept: "application/json",
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch holder count");
+
+      const data = await response.json();
+      // Moralis returns total holder count in the response
+      return data.result ? data.result.length : 0;
+    } catch (err) {
+      console.error("Error fetching holder count:", err);
+      return 0;
+    }
+  };
+
+  // Fetch token data from DexScreener
+  const fetchTokenData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(DEX_API_URL);
+      if (!response.ok) throw new Error("Failed to fetch token data");
+
+      const data = await response.json();
+
+      if (data.pairs && data.pairs.length > 0) {
+        const pair = data.pairs[0];
+
+        setTokenData({
+          contractAddress: CONTRACT_ADDRESS,
+          totalSupply: "500,000,000,000",
+          circulatingSupply: "850,000,000",
+          burned: "50,000,000",
+          price: parseFloat(pair.priceUsd) || 0,
+          marketCap: pair.marketCap || pair.fdv || 0,
+          holders: 0, // DexScreener doesn't provide this
+          volume24h: pair.volume?.h24 || 0,
+        });
+
+        setLastUpdated(new Date());
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+      console.error("Error fetching token data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch on component mount
+  useEffect(() => {
+    fetchTokenData();
+  }, []);
+
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchTokenData();
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const copyAddress = () => {
     navigator.clipboard.writeText(tokenData.contractAddress);
@@ -80,7 +173,7 @@ export default function Token() {
 
   return (
     <main
-      className="py-12 md:py-20 bg-ark-cream min-h-screen"
+      className="py-12 md:py-20 bg-gradient-to-b from-orange-50 to-white min-h-screen"
       data-testid="token-page"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -90,16 +183,29 @@ export default function Token() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            <span className="bg-gradient-to-r  text-ark-orange  from-ark-orange to-ark-magenta bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <span className="bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent">
               $ACT
             </span>{" "}
             Token
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             The heart of the ARK ecosystem. Hold, trade, and earn while making a
-            difference.$ACT
+            difference.
           </p>
+          {lastUpdated && (
+            <p className="text-sm text-gray-500 mt-2">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+              {loading && (
+                <span className="ml-2 animate-pulse">🔄 Updating...</span>
+              )}
+            </p>
+          )}
+          {error && (
+            <p className="text-sm text-red-500 mt-2">
+              ⚠️ Failed to fetch live data: {error}
+            </p>
+          )}
         </motion.div>
 
         <div className="grid lg:grid-cols-4 gap-4 mb-8">
@@ -131,13 +237,11 @@ export default function Token() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card
-                className="p-5 text-center"
+                className="p-5 text-center hover:shadow-lg transition-shadow"
                 data-testid={`token-stat-${stat.label.toLowerCase().replace(" ", "-")}`}
               >
-                <stat.icon className="w-6 h-6 text-ark-orange mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground mb-1">
-                  {stat.label}
-                </p>
+                <stat.icon className="w-6 h-6 text-orange-500 mx-auto mb-2" />
+                <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
                 <p className="text-2xl">
                   <AnimatedCounter target={stat.value} prefix={stat.prefix} />
                 </p>
@@ -154,16 +258,16 @@ export default function Token() {
             className="lg:col-span-2"
           >
             <Card className="p-6 md:p-8">
-              <h2 className="text-xl font-bold text-foreground mb-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">
                 Contract Details
               </h2>
 
               <div className="mb-6">
-                <label className="text-sm text-muted-foreground mb-2 block">
+                <label className="text-sm text-gray-600 mb-2 block">
                   Contract Address (BSC)
                 </label>
-                <div className="flex items-center gap-2 p-4 bg-ark-cream rounded-lg">
-                  <code className="flex-1 font-mono text-sm text-foreground break-all">
+                <div className="flex items-center gap-2 p-4 bg-orange-50 rounded-lg">
+                  <code className="flex-1 font-mono text-sm text-gray-900 break-all">
                     {tokenData.contractAddress}
                   </code>
                   <Button
@@ -183,29 +287,25 @@ export default function Token() {
               </div>
 
               <div className="grid md:grid-cols-3 gap-4 mb-6">
-                <div className="p-4 bg-ark-cream/50 rounded-lg">
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Total Supply
-                  </p>
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Total Supply</p>
                   <p className="font-mono font-semibold">
                     {tokenData.totalSupply}
                   </p>
                 </div>
-                <div className="p-4 bg-ark-cream/50 rounded-lg">
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Circulating
-                  </p>
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Circulating</p>
                   <p className="font-mono font-semibold">
                     {tokenData.circulatingSupply}
                   </p>
                 </div>
-                <div className="p-4 bg-ark-cream/50 rounded-lg">
-                  <p className="text-sm text-muted-foreground mb-1">Burned</p>
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-1">Burned</p>
                   <p className="font-mono font-semibold">{tokenData.burned}</p>
                 </div>
               </div>
 
-              <h3 className="text-lg font-semibold text-foreground mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Tokenomics
               </h3>
               <div className="space-y-4">
@@ -213,26 +313,24 @@ export default function Token() {
                   {
                     label: "Treasury (Missions)",
                     percent: 10,
-                    color: "bg-ark-orange",
+                    color: "bg-orange-500",
                   },
                   {
                     label: "Liquidity Pool",
                     percent: 15,
-                    color: "bg-ark-magenta",
+                    color: "bg-pink-600",
                   },
                   {
                     label: "Holder Reflections",
-                    percent: 5,
-                    color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
+                    percent: 7,
+                    color: "bg-gradient-to-r from-orange-500 to-pink-600",
                   },
                   { label: "Burn", percent: 5, color: "bg-gray-400" },
                 ].map((item) => (
                   <div key={item.label}>
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-muted-foreground">
-                        {item.label}
-                      </span>
-                      <span className="font-semibold text-foreground">
+                      <span className="text-gray-600">{item.label}</span>
+                      <span className="font-semibold text-gray-900">
                         {item.percent}%
                       </span>
                     </div>
@@ -248,7 +346,7 @@ export default function Token() {
 
               <div className="flex gap-3 mt-8">
                 <Button
-                  className="flex-1 bg-ark-orange hover:bg-ark-orange/90"
+                  className="flex-1 bg-orange-500 hover:bg-orange-600"
                   data-testid="button-buy-pancake"
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
@@ -256,7 +354,7 @@ export default function Token() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-ark-orange text-ark-orange hover:bg-ark-orange/10"
+                  className="border-orange-500 text-orange-500 hover:bg-orange-50"
                   data-testid="button-view-dextools"
                 >
                   View on DexTools
@@ -272,49 +370,42 @@ export default function Token() {
           >
             <Card className="p-6 md:p-8 sticky top-24">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-ark-orange to-ark-magenta flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center mx-auto mb-4">
                   <Wallet className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground">Buy $ACT</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <h3 className="text-xl font-bold text-gray-900">Buy $ACT</h3>
+                <p className="text-sm text-gray-600 mt-1">
                   Connect your wallet to purchase
                 </p>
               </div>
 
-              {/*<Button
-                className="w-full bg-ark-orange hover:bg-ark-orange/90 mb-4"
-                data-testid="button-connect-wallet"
-              >
-                Connect Wallet Buy On PancakeSwap
-              </Button>*/}
-
               <Button
-                className="flex-1 w-full bg-ark-orange hover:bg-ark-orange/90 mb-4"
+                className="flex-1 w-full bg-orange-500 hover:bg-orange-600 mb-4"
                 data-testid="button-buy-pancake"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Buy on PancakeSwap
               </Button>
 
-              <div className="p-4 bg-gradient-to-br from-ark-orange/10 to-ark-magenta/10 rounded-xl">
-                <h4 className="font-semibold text-foreground mb-3">
+              <div className="p-4 bg-gradient-to-br from-orange-50 to-pink-50 rounded-xl">
+                <h4 className="font-semibold text-gray-900 mb-3">
                   Holder Benefits
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
+                <ul className="text-sm text-gray-600 space-y-2">
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     3% reflections on transactions
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     Governance voting rights
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     Exclusive community access
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ark-orange" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     Direct social impact
                   </li>
                 </ul>
