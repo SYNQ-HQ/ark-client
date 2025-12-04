@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Copy, ExternalLink, Check, ArrowRight } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { easing } from "@/lib/motion";
+import { useLocation, Link } from "wouter";
 
 const tokenData = {
   contractAddress: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
@@ -59,6 +60,7 @@ export default function TokenStats() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [copied, setCopied] = useState(false);
+  const [navigate] = useLocation();
 
   const copyAddress = () => {
     navigator.clipboard.writeText(tokenData.contractAddress);
@@ -191,9 +193,23 @@ export default function TokenStats() {
                   variant="outline"
                   className="border-foreground/20 text-foreground hover:border-ark-orange hover:text-ark-orange"
                   data-testid="button-view-chart"
+                  // onClick={() =>
+                  //   navigate(
+                  //     "https://dexscreener.com/bsc/0x0318a2b3ba958b56fa67ef24485e22b101a004b7",
+                  //   )
+                  // }
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  View Chart
+                  <a
+                    href={
+                      "https://dexscreener.com/bsc/0x0318a2b3ba958b56fa67ef24485e22b101a004b7"
+                    }
+                    target="_blank"
+                    className="w-full flex"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Chart
+                  </a>
+                  {/*View Chart*/}
                 </MagneticButton>
               </div>
             </Card>
