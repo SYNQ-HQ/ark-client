@@ -9,7 +9,6 @@ const DEX_API_URL =
 // const CONTRACT_ADDRESS = "0x345F6423cEf697926C23dC010Eb1B96f8268bcec";
 const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 const CONTRACT_ADDRESS_FAKE = import.meta.env.CONTRACT_ADDRESS_FAKE;
-console.log(CONTRACT_ADDRESS, "contract");
 
 interface StatItem {
   label: string;
