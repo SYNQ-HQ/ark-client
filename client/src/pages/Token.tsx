@@ -12,10 +12,12 @@ import {
   Wallet,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import useHolderCount from "@/hooks/useHolderCount";
 
 const DEX_API_URL =
   "https://api.dexscreener.com/latest/dex/tokens/0x345f6423cef697926c23dc010eb1b96f8268bcec";
-const CONTRACT_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+const CONTRACT_ADDRESS_FAKE = import.meta.env.VITE_CONTRACT_ADDRESS_FAKE;
 
 const DEFAULT_DATA = {
   contractAddress: CONTRACT_ADDRESS,
@@ -32,10 +34,12 @@ function AnimatedCounter({
   target,
   prefix = "",
   suffix = "",
+  label = "",
 }: {
   target: number;
   prefix?: string;
   suffix?: string;
+  label?: string;
 }) {
   const [count, setCount] = useState(0);
 
@@ -45,27 +49,23 @@ function AnimatedCounter({
     const increment = target / steps;
     let current = 0;
     let step = 0;
-
     const timer = setInterval(() => {
       step++;
       current = Math.min(increment * step, target);
       setCount(current);
       if (step >= steps) clearInterval(timer);
     }, duration / steps);
-
     return () => clearInterval(timer);
   }, [target]);
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(2)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
-
     // For very small numbers (crypto prices)
     if (num < 1 && num > 0) {
       // Count leading zeros after decimal point
       const str = num.toFixed(20); // Get high precision
       const match = str.match(/^0\.0*[1-9]/); // Find first non-zero digit
-
       if (match) {
         const leadingZeros = match[0].split("0").length - 2;
         // Show at least 2 significant digits after leading zeros
@@ -73,15 +73,54 @@ function AnimatedCounter({
       }
       return num.toFixed(8);
     }
-
     if (num === 0) return "0";
     return num.toLocaleString();
   };
 
+  const formatTokenPrice = (price: number): string => {
+    if (price >= 0.01) {
+      return price.toFixed(2);
+    }
+    if (price === 0) {
+      return "0.00";
+    }
+    const priceStr = price.toExponential();
+    const [coefficient, exponent] = priceStr.split("e");
+    const exp = Math.abs(parseInt(exponent));
+    const decimalStr = price.toFixed(exp + 2);
+    const match = decimalStr.match(/^0\.0+/);
+    if (!match) {
+      return price.toFixed(2);
+    }
+    const leadingZeros = match[0].length - 2;
+    const significantDigits = decimalStr.replace(/^0\.0+/, "").slice(0, 4);
+    const subscriptMap: { [key: string]: string } = {
+      "0": "₀",
+      "1": "₁",
+      "2": "₂",
+      "3": "₃",
+      "4": "₄",
+      "5": "₅",
+      "6": "₆",
+      "7": "₇",
+      "8": "₈",
+      "9": "₉",
+    };
+    const subscript = leadingZeros
+      .toString()
+      .split("")
+      .map((d) => subscriptMap[d])
+      .join("");
+    return `0.0${subscript}${significantDigits}`;
+  };
+
+  const formattedValue =
+    label === "price" ? formatTokenPrice(count) : formatNumber(count);
+
   return (
     <span className="font-mono font-bold text-foreground">
       {prefix}
-      {formatNumber(count)}
+      {formattedValue}
       {suffix}
     </span>
   );
@@ -94,27 +133,11 @@ export default function Token() {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const fetchHolderCount = async () => {
-    try {
-      const url = `https://deep-index.moralis.io/api/v2.2/erc20/${CONTRACT_ADDRESS}/owners?chain=bsc&order=DESC`;
-      const response = await fetch(url, {
-        headers: {
-          "X-API-Key":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU2YWI3MTQ3LWM3NTItNDRlNi1hYzExLWUyMDc5YWZkNzhkNSIsIm9yZ0lkIjoiNDg0NDY2IiwidXNlcklkIjoiNDk4NDI4IiwidHlwZUlkIjoiZjMxMDRjNTUtODQwMS00ZTNhLThmMGQtYTE4YTZkZGNhMmM5IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3NjQ4MDAzOTIsImV4cCI6NDkyMDU2MDM5Mn0.6MIKgb_yigB4ljlVSBS3CWe-b58Tuy-1gM6rsqmBglM",
-          accept: "application/json",
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch holder count");
-
-      const data = await response.json();
-      // Moralis returns total holder count in the response
-      return data.result ? data.result.length : 0;
-    } catch (err) {
-      console.error("Error fetching holder count:", err);
-      return 0;
-    }
-  };
+  const {
+    count,
+    refetch,
+    loading: HolderCountLoading,
+  } = useHolderCount(CONTRACT_ADDRESS);
 
   // Fetch token data from DexScreener
   const fetchTokenData = async () => {
@@ -131,13 +154,13 @@ export default function Token() {
         const pair = data.pairs[0];
 
         setTokenData({
-          contractAddress: CONTRACT_ADDRESS,
+          contractAddress: CONTRACT_ADDRESS_FAKE,
           totalSupply: "500,000,000,000",
           circulatingSupply: "850,000,000",
           burned: "50,000,000",
           price: parseFloat(pair.priceUsd) || 0,
           marketCap: pair.marketCap || pair.fdv || 0,
-          holders: 0, // DexScreener doesn't provide this
+          holders: await refetch(),
           volume24h: pair.volume?.h24 || 0,
         });
 
@@ -243,7 +266,11 @@ export default function Token() {
                 <stat.icon className="w-6 h-6 text-orange-500 mx-auto mb-2" />
                 <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
                 <p className="text-2xl">
-                  <AnimatedCounter target={stat.value} prefix={stat.prefix} />
+                  <AnimatedCounter
+                    label={stat.label.toLowerCase()}
+                    target={stat.value}
+                    prefix={stat.prefix}
+                  />
                 </p>
               </Card>
             </motion.div>
