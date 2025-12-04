@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Menu, ArrowRight } from "lucide-react";
 import { easing } from "@/lib/motion";
+import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -143,13 +144,15 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <Button
-                className="hidden sm:flex bg-ark-orange hover:bg-ark-orange text-white shadow-lg shadow-ark-orange/20 gap-2"
-                data-testid="button-buy-nav"
-              >
-                Buy $ACT
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <PancakeSwapButtonProvider>
+                <Button
+                  className="hidden sm:flex bg-ark-orange hover:bg-ark-orange text-white shadow-lg shadow-ark-orange/20 gap-2"
+                  data-testid="button-buy-nav"
+                >
+                  Buy $ACT
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </PancakeSwapButtonProvider>
             </motion.div>
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

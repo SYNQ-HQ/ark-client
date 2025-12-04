@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion";
 import { ArrowRight, Users, DollarSign, Heart } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { easing } from "@/lib/motion";
+import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
+import CommunityUrlProvider from "./CommunityUrlProvider";
 
 function AnimatedCounter({
   target,
@@ -156,22 +158,27 @@ export default function JoinCTA() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5, ease: easing.smooth }}
           >
-            <MagneticButton
-              size="lg"
-              className="bg-white text-ark-orange hover:bg-white px-10 py-7 text-lg rounded-xl shadow-xl shadow-black/10"
-              data-testid="button-buy-cta"
-            >
-              Buy $ACT Now
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </MagneticButton>
-            <MagneticButton
-              size="lg"
-              variant="outline"
-              className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-7 text-lg rounded-xl backdrop-blur-sm"
-              data-testid="button-join-community"
-            >
-              Join Community
-            </MagneticButton>
+            <PancakeSwapButtonProvider>
+              <MagneticButton
+                size="lg"
+                className="bg-white text-ark-orange hover:bg-white px-10 py-7 text-lg rounded-xl shadow-xl shadow-black/10"
+                data-testid="button-buy-cta"
+              >
+                Buy $ACT Now
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </MagneticButton>
+            </PancakeSwapButtonProvider>
+
+            <CommunityUrlProvider>
+              <MagneticButton
+                size="lg"
+                variant="outline"
+                className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-7 text-lg rounded-xl backdrop-blur-sm"
+                data-testid="button-join-community"
+              >
+                Join Community
+              </MagneticButton>
+            </CommunityUrlProvider>
           </motion.div>
 
           <motion.div

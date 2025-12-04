@@ -5,6 +5,7 @@ import { Copy, ExternalLink, Check, ArrowRight } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { easing } from "@/lib/motion";
 import { useLocation, Link } from "wouter";
+import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
 
 const tokenData = {
   contractAddress: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
@@ -182,13 +183,15 @@ export default function TokenStats() {
               </div>
 
               <div className="flex gap-4">
-                <MagneticButton
-                  className="flex-1 bg-ark-orange hover:bg-ark-orange text-white"
-                  data-testid="button-buy-token"
-                >
-                  Buy $ACT
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </MagneticButton>
+                <PancakeSwapButtonProvider>
+                  <MagneticButton
+                    className="flex-1 bg-ark-orange hover:bg-ark-orange text-white"
+                    data-testid="button-buy-token"
+                  >
+                    Buy $ACT
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </MagneticButton>
+                </PancakeSwapButtonProvider>
                 <MagneticButton
                   variant="outline"
                   className="border-foreground/20 text-foreground hover:border-ark-orange hover:text-ark-orange"

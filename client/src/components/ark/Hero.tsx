@@ -7,6 +7,7 @@ import { ArrowRight, Gem, Globe, Sparkles } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { easing, heroContainer, staggerItem } from "@/lib/motion";
 import heroImage from "@assets/generated_images/web3_community_impact_ecosystem_illustration.png";
+import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
 
 const userimages = [
   "https://img.freepik.com/free-photo/headshot-attractive-young-dark-skinned-bearded-student-stylish-jeans-shirt-smiling-cheerfully-showing-his-perfect-white-teeth-looking-sideways-with-inspired-happy-smile-horizontal_273609-1849.jpg?t=st=1764615820~exp=1764619420~hmac=b41942f3ef40335d9b7211a139677ea01e3ab6c872688136faeff07157786a97&w=1480",
@@ -142,14 +143,16 @@ export default function Hero() {
             </motion.p>
 
             <motion.div variants={staggerItem} className="flex flex-wrap gap-4">
-              <MagneticButton
-                size="lg"
-                className="bg-ark-orange hover:bg-ark-orange text-white px-8 py-6 text-base font-medium rounded-xl"
-                data-testid="button-buy-hero"
-              >
-                Buy $ACT
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </MagneticButton>
+              <PancakeSwapButtonProvider>
+                <MagneticButton
+                  size="lg"
+                  className="bg-ark-orange hover:bg-ark-orange text-white px-8 py-6 text-base font-medium rounded-xl"
+                  data-testid="button-buy-hero"
+                >
+                  Buy $ACT
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </MagneticButton>
+              </PancakeSwapButtonProvider>
               <Link href="/whitepaper">
                 <MagneticButton
                   size="lg"

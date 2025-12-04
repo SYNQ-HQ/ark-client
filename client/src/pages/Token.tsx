@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import useHolderCount from "@/hooks/useHolderCount";
+import PancakeSwapButtonProvider from "@/components/ark/PancakeSwapButtonProvider";
+import DexScreenerUrlProvider from "@/components/ark/DexScreenerUrlProvider";
 
 const DEX_API_URL =
   "https://api.dexscreener.com/latest/dex/tokens/0x345f6423cef697926c23dc010eb1b96f8268bcec";
@@ -372,20 +374,24 @@ export default function Token() {
               </div>
 
               <div className="flex gap-3 mt-8">
-                <Button
-                  className="flex-1 bg-orange-500 hover:bg-orange-600"
-                  data-testid="button-buy-pancake"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Buy on PancakeSwap
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-orange-500 text-orange-500 hover:bg-orange-50"
-                  data-testid="button-view-dextools"
-                >
-                  View on DexTools
-                </Button>
+                <PancakeSwapButtonProvider>
+                  <Button
+                    className="flex-1 bg-orange-500 hover:bg-orange-600"
+                    data-testid="button-buy-pancake"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Buy on PancakeSwap
+                  </Button>
+                </PancakeSwapButtonProvider>
+                <DexScreenerUrlProvider>
+                  <Button
+                    variant="outline"
+                    className="border-orange-500 text-orange-500 hover:bg-orange-50"
+                    data-testid="button-view-dextools"
+                  >
+                    View on DexScreener
+                  </Button>
+                </DexScreenerUrlProvider>
               </div>
             </Card>
           </motion.div>
@@ -406,13 +412,15 @@ export default function Token() {
                 </p>
               </div>
 
-              <Button
-                className="flex-1 w-full bg-orange-500 hover:bg-orange-600 mb-4"
-                data-testid="button-buy-pancake"
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Buy on PancakeSwap
-              </Button>
+              <PancakeSwapButtonProvider>
+                <Button
+                  className="flex-1 w-full bg-orange-500 hover:bg-orange-600 mb-4"
+                  data-testid="button-buy-pancake"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Buy on PancakeSwap
+                </Button>
+              </PancakeSwapButtonProvider>
 
               <div className="p-4 bg-gradient-to-br from-orange-50 to-pink-50 rounded-xl">
                 <h4 className="font-semibold text-gray-900 mb-3">

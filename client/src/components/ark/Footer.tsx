@@ -11,7 +11,10 @@ const footerLinks = {
     { label: "Token", href: "/token" },
     { label: "Whitepaper", href: "/whitepaper" },
     { label: "Roadmap", href: "/#roadmap" },
-    { label: "Buy $ACT", href: "/token" },
+    {
+      label: "Buy $ACT",
+      href: "https://pancakeswap.finance/swap?chain=bsc&outputCurrency=BNB&inputCurrency=0x345F6423cEf697926C23dC010Eb1B96f8268bcec",
+    },
   ],
   community: [
     { label: "Impact", href: "/impact" },
