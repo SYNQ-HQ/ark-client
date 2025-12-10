@@ -41,7 +41,7 @@ export default function WhitepaperViewer() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
