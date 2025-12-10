@@ -19,6 +19,46 @@ const tokenData = {
   reflections: "5%",
 };
 
+export const tokenDistributionData = [
+  {
+    label: "Public liquidity & trading:",
+    percent: 40,
+    color: "bg-ark-orange",
+  },
+  {
+    label: "Ecosystem incentives & rewards",
+    percent: 20,
+    // color: "bg-ark-magenta",
+    color: "bg-ark-orange",
+  },
+  {
+    label: "Team & builders allocation",
+    percent: 15,
+    // color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
+    color: "bg-ark-orange",
+  },
+  {
+    label: "ARK Foundation impact pool",
+    percent: 15,
+    // color: "bg-foreground/30",
+    color: "bg-ark-orange",
+  },
+  {
+    label: "Treasury & infrastructure reserve",
+    percent: 10,
+    // color: "bg-ark-magenta/10",
+    color: "bg-ark-orange",
+  },
+];
+
+const whyBuyAct = [
+  "$ACT powers every ARK product.",
+  "Earn passive reflections on every transaction.",
+  "Vote on community missions and proposals.",
+  "Access exclusive holder events and rewards.",
+  "Direct impact on global social causes.",
+];
+
 const stats = [
   { label: "Total Supply", value: tokenData.totalSupply, suffix: " $ACT" },
   { label: "Circulating", value: tokenData.circulatingSupply, suffix: " $ACT" },
@@ -234,24 +274,7 @@ export default function TokenStats() {
               </h3>
 
               <div className="space-y-6">
-                {[
-                  {
-                    label: "Treasury (Missions)",
-                    percent: 10,
-                    color: "bg-ark-orange",
-                  },
-                  {
-                    label: "Liquidity Pool",
-                    percent: 15,
-                    color: "bg-ark-magenta",
-                  },
-                  {
-                    label: "Holder Reflections",
-                    percent: 5,
-                    color: "bg-gradient-to-r from-ark-orange to-ark-magenta",
-                  },
-                  { label: "Burn", percent: 5, color: "bg-foreground/30" },
-                ].map((item, index) => (
+                {tokenDistributionData.map((item, index) => (
                   <div
                     key={item.label}
                     data-testid={`tokenomics-${item.label.toLowerCase().replace(" ", "-")}`}
@@ -283,12 +306,7 @@ export default function TokenStats() {
                   Why Hold $ACT?
                 </h4>
                 <ul className="text-sm text-muted-foreground space-y-3">
-                  {[
-                    "Earn passive reflections on every transaction",
-                    "Vote on community missions and proposals",
-                    "Access exclusive holder events and rewards",
-                    "Direct impact on global social causes",
-                  ].map((item, i) => (
+                  {whyBuyAct.map((item, i) => (
                     <motion.li
                       key={i}
                       className="flex items-center gap-3"

@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import useHolderCount from "@/hooks/useHolderCount";
 import PancakeSwapButtonProvider from "@/components/ark/PancakeSwapButtonProvider";
 import DexScreenerUrlProvider from "@/components/ark/DexScreenerUrlProvider";
+import { tokenDistributionData } from "@/components/ark/TokenStats";
 
 const DEX_API_URL =
   "https://api.dexscreener.com/latest/dex/tokens/0x345f6423cef697926c23dc010eb1b96f8268bcec";
@@ -338,24 +339,7 @@ export default function Token() {
                 Tokenomics
               </h3>
               <div className="space-y-4">
-                {[
-                  {
-                    label: "Treasury (Missions)",
-                    percent: 10,
-                    color: "bg-orange-500",
-                  },
-                  {
-                    label: "Liquidity Pool",
-                    percent: 15,
-                    color: "bg-pink-600",
-                  },
-                  {
-                    label: "Holder Reflections",
-                    percent: 7,
-                    color: "bg-gradient-to-r from-orange-500 to-pink-600",
-                  },
-                  { label: "Burn", percent: 5, color: "bg-gray-400" },
-                ].map((item) => (
+                {tokenDistributionData.map((item) => (
                   <div key={item.label}>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-600">{item.label}</span>
