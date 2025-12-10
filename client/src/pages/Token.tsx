@@ -413,6 +413,11 @@ export default function Token() {
                 <ul className="text-sm text-gray-600 space-y-2">
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                    Direct access to every project, mission and applications in
+                    the ARK ecosystem
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     3% reflections on transactions
                   </li>
                   <li className="flex items-center gap-2">
