@@ -160,7 +160,11 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <a href="https://dashboard.arkcharitytoken.com">
+              <a
+                href="https://dashboard.arkcharitytoken.com"
+                target="_blank"
+                referrerPolicy="no-referrer"
+              >
                 <Button
                   className="hidden sm:flex bg-ark-orange border-ark-orange hover:bg-ark-orange text-white shadow-lg shadow-ark-orange/20 gap-2"
                   data-testid="button-earn-nav"
