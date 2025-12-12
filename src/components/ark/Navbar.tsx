@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu, ArrowRight } from "lucide-react";
+import { Menu, ArrowRight, ArrowUpRight } from "lucide-react";
 import { easing } from "@/lib/motion";
 import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
 
@@ -153,6 +153,22 @@ export default function Navbar({ language, onLanguageChange }: NavbarProps) {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </PancakeSwapButtonProvider>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <a href="https://dashboard.arkcharitytoken.com">
+                <Button
+                  className="hidden sm:flex bg-ark-orange border-ark-orange hover:bg-ark-orange text-white shadow-lg shadow-ark-orange/20 gap-2"
+                  data-testid="button-earn-nav"
+                >
+                  $Earn
+                  <ArrowUpRight className="w-4 h-4" />
+                </Button>
+              </a>
             </motion.div>
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
