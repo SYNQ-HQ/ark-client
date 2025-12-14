@@ -3,7 +3,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Twitter, Send, MessageCircle, Github, ArrowRight } from "lucide-react";
+import {
+  Twitter,
+  Send,
+  MessageCircle,
+  Github,
+  ArrowRight,
+  Music2,
+} from "lucide-react";
 import { easing } from "@/lib/motion";
 
 const footerLinks = {
@@ -35,9 +42,18 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: "https://x.com/ArkCharityToken", label: "Twitter" },
-  { icon: Send, href: "https://t.me/arkcharitytoken", label: "Telegram" },
+  { icon: Send, href: "https://t.me/arkcharitytoken", label: "Telegram" }, // ✅ Perfect match
+  {
+    icon: MessageCircle,
+    href: "https://zora.co/@arkcharitytoken",
+    label: "Zora",
+  },
+  {
+    icon: Music2,
+    href: "https://tiktok.com/@arkcharitytoken",
+    label: "TikTok",
+  }, // ✅ Best option
   // { icon: MessageCircle, href: "#", label: "Discord" },
-  // { icon: Github, href: "#", label: "GitHub" },
 ];
 
 export default function Footer() {
