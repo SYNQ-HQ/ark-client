@@ -157,7 +157,7 @@ export default function Token() {
         const pair = data.pairs[0];
 
         setTokenData({
-          contractAddress: CONTRACT_ADDRESS_FAKE,
+          contractAddress: CONTRACT_ADDRESS,
           totalSupply: "500,000,000,000",
           circulatingSupply: "850,000,000",
           burned: "50,000,000",
@@ -300,7 +300,7 @@ export default function Token() {
                   <code className="flex-1 font-mono text-sm text-gray-900 break-all">
                     {tokenData.contractAddress}
                   </code>
-                  {/*<Button
+                  <Button
                     variant="ghost"
                     size="icon"
                     onClick={copyAddress}
@@ -312,7 +312,7 @@ export default function Token() {
                     ) : (
                       <Copy className="w-4 h-4" />
                     )}
-                  </Button>*/}
+                  </Button>
                 </div>
               </div>
 

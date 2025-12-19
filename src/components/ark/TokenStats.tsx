@@ -7,10 +7,10 @@ import { easing } from "@/lib/motion";
 import { useLocation, Link } from "wouter";
 import PancakeSwapButtonProvider from "./PancakeSwapButtonProvider";
 
-const VITE_CONTRACT_ADDRESS_FAKE = import.meta.env.VITE_CONTRACT_ADDRESS_FAKE;
+const VITE_CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
 const tokenData = {
-  contractAddress: VITE_CONTRACT_ADDRESS_FAKE,
+  contractAddress: VITE_CONTRACT_ADDRESS,
   totalSupply: "500,000,000,000",
   circulatingSupply: "75,000,000,000",
   burned: "50,000,000",
@@ -182,7 +182,7 @@ export default function TokenStats() {
                 <code className="flex-1 font-mono self-start bg-ark-orange p-5 text-sm text-foreground rounded-xs bg-current/90 break-all">
                   {tokenData.contractAddress}
                 </code>
-                {/*<motion.button
+                <motion.button
                   onClick={copyAddress}
                   className="flex-shrink-0 p-2.5 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
                   whileHover={{ scale: 1.05 }}
@@ -194,7 +194,7 @@ export default function TokenStats() {
                   ) : (
                     <Copy className="w-4 h-4 text-muted-foreground" />
                   )}
-                </motion.button>*/}
+                </motion.button>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
